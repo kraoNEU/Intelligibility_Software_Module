@@ -1,16 +1,24 @@
-# This is a sample Python script.
+from tkinter import *
+from PIL import ImageTk, Image
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+root = Tk()
+root.title("Intelligibility Software Module for SMILe Lab")
+root.iconbitmap("Logo/Northeastern_University_seal.ico")
+
+e = Entry(root, bg='blue', fg='yellow')
+e.insert(1, "Enter Your Name: ")
+e.pack()
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+def myClick():
+    myLabel = Label(root, text="Hello {0}".format(e.get()))
+    myLabel.pack()
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+Bustton_quit = Button(root, text="Click me to exit", command=root.quit)
+myButton = Button(root, text="Click Me", command=myClick)
+my_img = ImageTk.PhotoImage()
+Bustton_quit.pack()
+myButton.pack()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+root.mainloop()
