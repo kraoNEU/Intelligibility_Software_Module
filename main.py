@@ -29,6 +29,7 @@ class MusicPlayer:
 
     def __init__(self, root):
         self.root = root
+
         # Title of the window
         self.root.title("MusicPlayer")
         # Window Geometry
