@@ -120,6 +120,6 @@ class SentencesPlayer:
 
         # It will Display the  Status
         self.status.set("-Playing")
-        
+
         # Playing back Song
         pygame.mixer.music.unpause()
