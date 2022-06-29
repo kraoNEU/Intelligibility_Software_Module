@@ -18,22 +18,17 @@ class SentencesPlayer:
         # Declaring track Variable
         self.track = StringVar()
 
-        # Declaring Status Variable
-        self.status = StringVar()
-
         # Creating the Track Frames for Song label & status label
-        trackframe = LabelFrame(self.root, text="Session Recording", font=("times new roman", 15, "bold"),
+        trackframe = LabelFrame(self.root, text="Session Input", font=("times new roman", 15),
                                 bg="Navyblue",
                                 fg="white", bd=5, relief=GROOVE)
         trackframe.place(x=0, y=0, width=600, height=100)
 
-        # Inserting Song Track Label
-        Label(trackframe, textvariable=self.track, width=20, font=("times new roman", 24, "bold"), bg="Orange",
-              fg="gold").grid(row=0, column=0, padx=10, pady=5)
+        # Inserting Text Box
+        # Label(trackframe, textvariable=self.status, font=("times new roman", 24, "bold"), bg="orange",
+        #       fg="gold").grid(row=0, column=1, padx=10, pady=5)
 
-        # Inserting Status Label
-        Label(trackframe, textvariable=self.status, font=("times new roman", 24, "bold"), bg="orange",
-              fg="gold").grid(row=0, column=1, padx=10, pady=5)
+        textBox = Text(self.root, padx=0, pady= 1)
 
         # Creating Button Frame
         buttonframe = LabelFrame(self.root, text="Control Panel", font=("times new roman", 15, "bold"), bg="grey",
@@ -41,23 +36,33 @@ class SentencesPlayer:
         buttonframe.place(x=0, y=100, width=600, height=100)
 
         # Inserting Play Button
-        Button(buttonframe, text="Play Voice", command=self.playsong, width=10, height=1,
+        Button(buttonframe, text="Play / Replay", command=self.playsong, width=10, height=1,
                font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=0, padx=10,
                                                                                     pady=5)
-        # Inserting Pause Button
-        Button(buttonframe, text="Pause", command=self.pausesong, width=8, height=1,
+        # Inserting Next Button
+        Button(buttonframe, text="Next", command=self.pausesong, width=8, height=1,
                font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=1, padx=10,
                                                                                     pady=5)
 
-        # Inserting Unpause Button
-        Button(buttonframe, text="Un-pause", command=self.unpausesong, width=10, height=1,
+        # Inserting Submit Button
+        Button(buttonframe, text="Submit", command=self.unpausesong, width=10, height=1,
                font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=2, padx=10,
                                                                                     pady=5)
 
+        # Inserting Pause Button
+        # Button(buttonframe, text="Pause", command=self.pausesong, width=8, height=1,
+        #        font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=1, padx=10,
+        #                                                                             pady=5)
+
+        # # Inserting Unpause Button
+        # Button(buttonframe, text="Un-pause", command=self.unpausesong, width=10, height=1,
+        #        font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=2, padx=10,
+        #                                                                             pady=5)
+
         # Inserting Stop Button
-        Button(buttonframe, text="Stop Voice", command=self.stopsong, width=10, height=1,
-               font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=3, padx=10,
-                                                                                    pady=5)
+        # Button(buttonframe, text="Stop Voice", command=self.stopsong, width=10, height=1,
+        #        font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=3, padx=10,
+        #                                                                             pady=5)
 
         # Creating Playlist Frame
         songsframe = LabelFrame(self.root, text="Sentences Playlist", font=("times new roman", 15, "bold"), bg="grey",
@@ -80,19 +85,19 @@ class SentencesPlayer:
         os.chdir("/Users/cvkrishnarao/Desktop/RA/Intelligibility_Software_Module/Test_File/Week_1")
 
         # Fetching Songs
-        songtracks = os.listdir()
+        sentencesTrack = os.listdir()
 
-        # Inserting Songs into Playlist
-        for track in songtracks:
-            self.playlist.insert(END, track)
+        # Inserting Songs into Playlist Condition check to remove unwanted System Files eg: .DS_Store etc.
+        for track in sentencesTrack:
+            if track.startswith("S"):
+                self.playlist.insert(END, track)
+        
+        textBox.pack()
 
     def playsong(self):
 
         # Displaying Selected Song title
         self.track.set(self.playlist.get(ACTIVE))
-
-        # Displaying Status
-        self.status.set("-Playing")
 
         # Loading Selected Song
         pygame.mixer.music.load(self.playlist.get(ACTIVE))
@@ -102,24 +107,15 @@ class SentencesPlayer:
 
     def stopsong(self):
 
-        # Displaying Status
-        self.status.set("-Stopped")
-
         # Stopped Song
         pygame.mixer.music.stop()
 
     def pausesong(self):
 
-        # Displaying Status
-        self.status.set("-Paused")
-
         # Paused Song
         pygame.mixer.music.pause()
 
     def unpausesong(self):
-
-        # It will Display the  Status
-        self.status.set("-Playing")
 
         # Playing back Song
         pygame.mixer.music.unpause()
