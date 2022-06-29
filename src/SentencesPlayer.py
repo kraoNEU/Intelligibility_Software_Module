@@ -6,16 +6,18 @@ from tkinter import *
 class SentencesPlayer:
 
     def __init__(self, root):
-        self.root = root
 
-        # Title of the window
+        self.root = root
 
         # Initiating Pygame
         pygame.init()
+
         # Initiating Pygame Mixer
         pygame.mixer.init()
+
         # Declaring track Variable
         self.track = StringVar()
+
         # Declaring Status Variable
         self.status = StringVar()
 
@@ -24,6 +26,7 @@ class SentencesPlayer:
                                 bg="Navyblue",
                                 fg="white", bd=5, relief=GROOVE)
         trackframe.place(x=0, y=0, width=600, height=100)
+
         # Inserting Song Track Label
         Label(trackframe, textvariable=self.track, width=20, font=("times new roman", 24, "bold"), bg="Orange",
               fg="gold").grid(row=0, column=0, padx=10, pady=5)
@@ -84,29 +87,39 @@ class SentencesPlayer:
             self.playlist.insert(END, track)
 
     def playsong(self):
+
         # Displaying Selected Song title
         self.track.set(self.playlist.get(ACTIVE))
+
         # Displaying Status
         self.status.set("-Playing")
+
         # Loading Selected Song
         pygame.mixer.music.load(self.playlist.get(ACTIVE))
+
         # Playing Selected Song
         pygame.mixer.music.play()
 
     def stopsong(self):
+
         # Displaying Status
         self.status.set("-Stopped")
+
         # Stopped Song
         pygame.mixer.music.stop()
 
     def pausesong(self):
+
         # Displaying Status
         self.status.set("-Paused")
+
         # Paused Song
         pygame.mixer.music.pause()
 
     def unpausesong(self):
+
         # It will Display the  Status
         self.status.set("-Playing")
+        
         # Playing back Song
         pygame.mixer.music.unpause()
