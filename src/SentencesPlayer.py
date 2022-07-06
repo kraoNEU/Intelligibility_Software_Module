@@ -18,17 +18,13 @@ class SentencesPlayer:
         # Declaring track Variable
         self.track = StringVar()
 
-        # Creating the Track Frames for Song label & status label
-        trackframe = LabelFrame(self.root, text="Session Input", font=("times new roman", 15),
+        # Creating the Background
+        trackframe = LabelFrame(self.root, text="Sentences Input", font=("times new roman", 15),
                                 bg="Navyblue",
                                 fg="white", bd=5, relief=GROOVE)
-        trackframe.place(x=0, y=0, width=600, height=100)
+        trackframe.place(x=0, y=0, width=800, height=100)
 
-        # Inserting Text Box
-        # Label(trackframe, textvariable=self.status, font=("times new roman", 24, "bold"), bg="orange",
-        #       fg="gold").grid(row=0, column=1, padx=10, pady=5)
-
-        textBox = Text(self.root, padx=0, pady= 1)
+        Text(trackframe, width=83, height=5).grid(row=50, column=50)
 
         # Creating Button Frame
         buttonframe = LabelFrame(self.root, text="Control Panel", font=("times new roman", 15, "bold"), bg="grey",
@@ -91,8 +87,7 @@ class SentencesPlayer:
         for track in sentencesTrack:
             if track.startswith("S"):
                 self.playlist.insert(END, track)
-        
-        textBox.pack()
+
 
     def playsong(self):
 
@@ -109,6 +104,13 @@ class SentencesPlayer:
 
         # Stopped Song
         pygame.mixer.music.stop()
+
+    def nextsong(event):
+
+        global index
+        index += 1
+        pygame.mixer.music.load(listofsongs[index])
+        pygame.mixer.music.play()
 
     def pausesong(self):
 
