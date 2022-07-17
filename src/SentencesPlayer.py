@@ -1,6 +1,8 @@
 import pygame
 import os
 from tkinter import *
+import random
+from csv import *
 
 
 class SentencesPlayer:
@@ -9,8 +11,12 @@ class SentencesPlayer:
 
         self.root = root
 
+        self.main_list = []
+
         # Initiating Pygame
         pygame.init()
+
+        self.Input_Text = StringVar()
 
         # Initiating Pygame Mixer
         pygame.mixer.init()
@@ -24,7 +30,9 @@ class SentencesPlayer:
                                 fg="white", bd=5, relief=GROOVE)
         trackframe.place(x=0, y=0, width=800, height=100)
 
-        Text(trackframe, width=83, height=5).grid(row=50, column=50)
+        # Creating a Test Widget
+        self.Input_Text = Text(trackframe, width=83, height=5)
+        self.Input_Text.grid(row=50, column=50)
 
         # Creating Button Frame
         buttonframe = LabelFrame(self.root, text="Control Panel", font=("times new roman", 15, "bold"), bg="grey",
@@ -41,24 +49,9 @@ class SentencesPlayer:
                                                                                     pady=5)
 
         # Inserting Submit Button
-        Button(buttonframe, text="Submit", command=self.unpausesong, width=10, height=1,
+        Button(buttonframe, text="Submit", command=self.submitSentence, width=10, height=1,
                font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=2, padx=10,
                                                                                     pady=5)
-
-        # Inserting Pause Button
-        # Button(buttonframe, text="Pause", command=self.pausesong, width=8, height=1,
-        #        font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=1, padx=10,
-        #                                                                             pady=5)
-
-        # # Inserting Unpause Button
-        # Button(buttonframe, text="Un-pause", command=self.unpausesong, width=10, height=1,
-        #        font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=2, padx=10,
-        #                                                                             pady=5)
-
-        # Inserting Stop Button
-        # Button(buttonframe, text="Stop Voice", command=self.stopsong, width=10, height=1,
-        #        font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=3, padx=10,
-        #                                                                             pady=5)
 
         # Creating Playlist Frame
         songsframe = LabelFrame(self.root, text="Sentences Playlist", font=("times new roman", 15, "bold"), bg="grey",
@@ -77,8 +70,13 @@ class SentencesPlayer:
         scrol_y.config(command=self.playlist.yview)
         self.playlist.pack(fill=BOTH)
 
+        Week_List = [1, 2, 3, 4]
+        Sentences_List = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+
+        random.shuffle(Week_List)
+
         # Changing Directory for fetching Songs
-        os.chdir("/Users/cvkrishnarao/Desktop/RA/Intelligibility_Software_Module/Test_File/Week_1")
+        os.chdir(f"/Users/cvkrishnarao/Desktop/RA/Intelligibility_Software_Module/Test_File/Week_1")
 
         # Fetching Songs
         sentencesTrack = os.listdir()
@@ -87,7 +85,6 @@ class SentencesPlayer:
         for track in sentencesTrack:
             if track.startswith("S"):
                 self.playlist.insert(END, track)
-
 
     def playsong(self):
 
@@ -109,7 +106,7 @@ class SentencesPlayer:
 
         global index
         index += 1
-        pygame.mixer.music.load(listofsongs[index])
+        # pygame.mixer.music.load(listofsongs[index])
         pygame.mixer.music.play()
 
     def pausesong(self):
@@ -117,7 +114,11 @@ class SentencesPlayer:
         # Paused Song
         pygame.mixer.music.pause()
 
-    def unpausesong(self):
-
-        # Playing back Song
-        pygame.mixer.music.unpause()
+    def submitSentence(self):
+        if self.Input_Text != "":
+            list_Text = self.Input_Text.get("1.0", 'end')
+            self.main_list.append(list_Text)
+            with open("/Users/cvkrishnarao/Desktop/data_entry.csv", "w") as file:
+                Writer = writer(file)
+                Writer.writerow(["Input Text"])
+                Writer.writerow(self.main_list)
