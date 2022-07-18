@@ -1,5 +1,3 @@
-import csv
-
 import pygame
 import os
 from tkinter import *
@@ -42,7 +40,7 @@ class SentencesPlayer:
         buttonframe.place(x=0, y=100, width=600, height=100)
 
         # Inserting Play Button
-        Button(buttonframe, text="Play / Replay", command=self.playsong, width=10, height=1,
+        Button(buttonframe, text="Play / Replay", command=self.playSentence, width=10, height=1,
                font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=0, padx=10,
                                                                                     pady=5)
         # Inserting Next Button
@@ -88,7 +86,7 @@ class SentencesPlayer:
             if track.startswith("S"):
                 self.playlist.insert(END, track)
 
-    def playsong(self):
+    def playSentence(self):
 
         # Displaying Selected Song title
         self.track.set(self.playlist.get(ACTIVE))
@@ -99,7 +97,7 @@ class SentencesPlayer:
         # Playing Selected Song
         pygame.mixer.music.play()
 
-    def stopsong(self):
+    def stopSentence(self):
 
         # Stopped Song
         pygame.mixer.music.stop()
@@ -108,7 +106,7 @@ class SentencesPlayer:
 
         global index
         index += 1
-        # pygame.mixer.music.load(listofsongs[index])
+        pygame.mixer.music.load(listofsongs[index])
         pygame.mixer.music.play()
 
     def pausesong(self):
