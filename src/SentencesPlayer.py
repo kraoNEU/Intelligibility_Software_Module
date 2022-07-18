@@ -1,3 +1,5 @@
+import csv
+
 import pygame
 import os
 from tkinter import *
@@ -10,7 +12,7 @@ class SentencesPlayer:
     def __init__(self, root):
 
         self.root = root
-
+        self.count = 0
         self.main_list = []
 
         # Initiating Pygame
@@ -30,7 +32,7 @@ class SentencesPlayer:
                                 fg="white", bd=5, relief=GROOVE)
         trackframe.place(x=0, y=0, width=800, height=100)
 
-        # Creating a Test Widget
+        # Creating a Test Widget For the Input
         self.Input_Text = Text(trackframe, width=83, height=5)
         self.Input_Text.grid(row=50, column=50)
 
@@ -116,9 +118,20 @@ class SentencesPlayer:
 
     def submitSentence(self):
         if self.Input_Text != "":
+
+            # gets() the character from starting to end of character
             list_Text = self.Input_Text.get("1.0", 'end')
             self.main_list.append(list_Text)
-            with open("/Users/cvkrishnarao/Desktop/data_entry.csv", "w") as file:
-                Writer = writer(file)
-                Writer.writerow(["Input Text"])
-                Writer.writerow(self.main_list)
+            with open("/Users/cvkrishnarao/Desktop/data_entry.csv", "a+", newline='\n') as file:
+
+                if self.count == 0:
+                    Writer = writer(file)
+                    Writer.writerow(["Input Text"])
+                    Writer.writerow(self.main_list)
+                    self.main_list = []
+                    self.count += 1
+
+                else:
+                    Writer = writer(file)
+                    Writer.writerow(self.main_list)
+                    self.main_list = []
