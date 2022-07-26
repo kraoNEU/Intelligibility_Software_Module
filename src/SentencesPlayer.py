@@ -44,7 +44,7 @@ class SentencesPlayer:
                font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=0, padx=10,
                                                                                     pady=5)
         # Inserting Next Button
-        Button(buttonframe, text="Next", command=self.pausesong, width=8, height=1,
+        Button(buttonframe, text="Next", command=self.pauseSentence, width=8, height=1,
                font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=1, padx=10,
                                                                                     pady=5)
 
@@ -70,6 +70,13 @@ class SentencesPlayer:
         scrol_y.config(command=self.playlist.yview)
         self.playlist.pack(fill=BOTH)
 
+        self.playlist_test = os.listdir(f"/Users/cvkrishnarao/Desktop/RA/Intelligibility_Software_Module/Test_File"
+                                        f"/Week_1")
+
+        active_playlist_Test = self.playlist_test
+        self.indexed_track_Test = 0
+
+
         Week_List = [1, 2, 3, 4]
         Sentences_List = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
@@ -89,7 +96,7 @@ class SentencesPlayer:
     def playSentence(self):
 
         # Displaying Selected Song title
-        self.track.set(self.playlist.get(ACTIVE))
+        self.track.set(self.playlist_test)
 
         # Loading Selected Song
         pygame.mixer.music.load(self.playlist.get(ACTIVE))
@@ -102,14 +109,14 @@ class SentencesPlayer:
         # Stopped Song
         pygame.mixer.music.stop()
 
-    def nextsong(event):
+    def nextSentence(event):
 
         global index
         index += 1
         pygame.mixer.music.load(listofsongs[index])
         pygame.mixer.music.play()
 
-    def pausesong(self):
+    def pauseSentence(self):
 
         # Paused Song
         pygame.mixer.music.pause()
