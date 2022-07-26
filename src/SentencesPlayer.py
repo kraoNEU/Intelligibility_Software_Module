@@ -1,3 +1,4 @@
+from tkinter import messagebox
 import pygame
 import os
 from tkinter import *
@@ -11,7 +12,24 @@ class SentencesPlayer:
 
         self.root = root
         self.count = 0
+
+        # Week List
+        Week_List = [1]
+
+        # Sentences List
+        Sentences_List = [1, 2, 3, 4, 5, 6]
+
+        # Writing the Main Sentences from Text Box
         self.main_list = []
+
+        # List for Serial Number and the Index
+        self.Week_Sentences_List = []
+
+        self.music_number = int(0)
+        self.music_number2 = self.music_number
+
+        # Directory for the Sentences, Week Path
+        self.complete_sentences_list = []
 
         # Initiating Pygame
         pygame.init()
@@ -24,13 +42,35 @@ class SentencesPlayer:
         # Declaring track Variable
         self.track = StringVar()
 
+        # Shuffle the Random Week
+        random.shuffle(Week_List)
+
+        # Shuffle the Random Sentences
+        random.shuffle(Sentences_List)
+
+        # Creating random week and sentences list
+        for weeks in Week_List:
+            for sentences in Sentences_List:
+                list_For_Csv = f"W{weeks}_S{sentences}"
+                self.Week_Sentences_List.append(list_For_Csv)
+                path = f"/Users/cvkrishnarao/Desktop/RA/Intelligibility_Software_Module/Test_File/Week_{weeks}/Sentence_{sentences}.wav"
+
+                # Checking for this path in the future version to check and then append to the file
+                if os.path.isfile(path):
+                    print("Path Available")
+                    print(list_For_Csv)
+                self.complete_sentences_list.append(path)
+
+        self.next_music = (self.complete_sentences_list[self.music_number + 1])
+        self.current_music = (self.complete_sentences_list[self.music_number])
+
         # Creating the Background
         trackframe = LabelFrame(self.root, text="Sentences Input", font=("times new roman", 15),
                                 bg="Navyblue",
                                 fg="white", bd=5, relief=GROOVE)
         trackframe.place(x=0, y=0, width=800, height=100)
 
-        # Creating a Test Widget For the Input
+        # Creating a Text Widget For the Input
         self.Input_Text = Text(trackframe, width=83, height=5)
         self.Input_Text.grid(row=50, column=50)
 
@@ -44,7 +84,7 @@ class SentencesPlayer:
                font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=0, padx=10,
                                                                                     pady=5)
         # Inserting Next Button
-        Button(buttonframe, text="Next", command=self.pauseSentence, width=8, height=1,
+        Button(buttonframe, text="Next", command=self.nextSentence, width=8, height=1,
                font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=1, padx=10,
                                                                                     pady=5)
 
@@ -70,58 +110,46 @@ class SentencesPlayer:
         scrol_y.config(command=self.playlist.yview)
         self.playlist.pack(fill=BOTH)
 
-        self.playlist_test = os.listdir(f"/Users/cvkrishnarao/Desktop/RA/Intelligibility_Software_Module/Test_File"
-                                        f"/Week_1")
-
-        active_playlist_Test = self.playlist_test
-        self.indexed_track_Test = 0
-
-
-        Week_List = [1, 2, 3, 4]
-        Sentences_List = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-
-        random.shuffle(Week_List)
-
-        # Changing Directory for fetching Songs
-        os.chdir(f"/Users/cvkrishnarao/Desktop/RA/Intelligibility_Software_Module/Test_File/Week_1")
-
-        # Fetching Songs
-        sentencesTrack = os.listdir()
-
         # Inserting Songs into Playlist Condition check to remove unwanted System Files eg: .DS_Store etc.
-        for track in sentencesTrack:
+        for track in self.complete_sentences_list:
             if track.startswith("S"):
                 self.playlist.insert(END, track)
 
     def playSentence(self):
 
-        # Displaying Selected Song title
-        self.track.set(self.playlist_test)
+        current_sentence_playing = (self.complete_sentences_list[self.music_number])
 
-        # Loading Selected Song
-        pygame.mixer.music.load(self.playlist.get(ACTIVE))
+        if pygame.mixer.get_init():
+            if pygame.mixer.music.pause() is False:
+                pygame.mixer.music.play()
+                paused = True
+            else:
+                pygame.mixer.music.load(self.complete_sentences_list[self.music_number])
+                pygame.mixer.music.play()
+                paused = False
+        else:
+            pygame.mixer.init()
+            pygame.mixer.music.load(f"{current_sentence_playing}")
+            pygame.mixer.music.play()
+            paused = False
 
-        # Playing Selected Song
-        pygame.mixer.music.play()
+    def nextSentence(self):
 
-    def stopSentence(self):
+        try:
+            self.next_music = (self.Week_Sentences_List[self.music_number + 1])
+        except IndexError:
+            messagebox.showerror('End of the Sentences', 'You have completed all the sentences!')
 
-        # Stopped Song
+        self.current_music = (self.Week_Sentences_List[self.music_number])
+
         pygame.mixer.music.stop()
-
-    def nextSentence(event):
-
-        global index
-        index += 1
-        pygame.mixer.music.load(listofsongs[index])
-        pygame.mixer.music.play()
-
-    def pauseSentence(self):
-
-        # Paused Song
-        pygame.mixer.music.pause()
+        self.music_number = int(self.music_number2 + 1)
+        self.music_number2 = self.music_number
+        current_music = (self.complete_sentences_list[self.music_number])
+        pygame.mixer.music.load(current_music)
 
     def submitSentence(self):
+
         if self.Input_Text != "":
 
             # gets() the character from starting to end of character
