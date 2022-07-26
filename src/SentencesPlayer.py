@@ -9,7 +9,11 @@ from csv import *
 class SentencesPlayer:
 
     def __init__(self, root):
-
+        """
+        Initialised all the Tkinter Root and the Environment Variables.
+        Randomised the Files for the Sentences and Weeks
+        Created all the Background Widgets and the Labels for the GUI Module
+        """
         self.root = root
         self.count = 0
 
@@ -25,8 +29,8 @@ class SentencesPlayer:
         # List for Serial Number and the Index
         self.Week_Sentences_List = []
 
-        self.music_number = int(0)
-        self.music_number2 = self.music_number
+        self.current_sentence_number = int(0)
+        self.current_sentence_number2 = self.current_sentence_number
 
         # Directory for the Sentences, Week Path
         self.complete_sentences_list = []
@@ -57,12 +61,11 @@ class SentencesPlayer:
 
                 # Checking for this path in the future version to check and then append to the file
                 if os.path.isfile(path):
-                    print("Path Available")
                     print(list_For_Csv)
                 self.complete_sentences_list.append(path)
 
-        self.next_music = (self.complete_sentences_list[self.music_number + 1])
-        self.current_music = (self.complete_sentences_list[self.music_number])
+        self.next_music = (self.complete_sentences_list[self.current_sentence_number + 1])
+        self.current_sentence = (self.complete_sentences_list[self.current_sentence_number])
 
         # Creating the Background
         trackframe = LabelFrame(self.root, text="Sentences Input", font=("times new roman", 15),
@@ -93,38 +96,23 @@ class SentencesPlayer:
                font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=2, padx=10,
                                                                                     pady=5)
 
-        # Creating Playlist Frame
-        songsframe = LabelFrame(self.root, text="Sentences Playlist", font=("times new roman", 15, "bold"), bg="grey",
-                                fg="white", bd=5, relief=GROOVE)
-        songsframe.place(x=600, y=0, width=400, height=200)
-
-        # Inserting scrollbar
-        scrol_y = Scrollbar(songsframe, orient=VERTICAL)
-
-        # Inserting Playlist listbox
-        self.playlist = Listbox(songsframe, yscrollcommand=scrol_y.set, selectbackground="gold", selectmode=SINGLE,
-                                font=("times new roman", 12, "bold"), bg="silver", fg="navyblue", bd=5, relief=GROOVE)
-
-        # Applying Scrollbar to listbox
-        scrol_y.pack(side=RIGHT, fill=Y)
-        scrol_y.config(command=self.playlist.yview)
-        self.playlist.pack(fill=BOTH)
-
-        # Inserting Songs into Playlist Condition check to remove unwanted System Files eg: .DS_Store etc.
-        for track in self.complete_sentences_list:
-            if track.startswith("S"):
-                self.playlist.insert(END, track)
-
     def playSentence(self):
+        """
+        Sets the Current Main Track in the Loop and Loads the Music to the pygame library
+        After Loads() the Pygame library plays the music
+        :returns: Null
+        """
 
-        current_sentence_playing = (self.complete_sentences_list[self.music_number])
+        # Setting the Current Sentence as the Main Track
+        current_sentence_playing = (self.complete_sentences_list[self.current_sentence_number])
 
+        # Check for other Tracks in the List
         if pygame.mixer.get_init():
             if pygame.mixer.music.pause() is False:
                 pygame.mixer.music.play()
                 paused = True
             else:
-                pygame.mixer.music.load(self.complete_sentences_list[self.music_number])
+                pygame.mixer.music.load(self.complete_sentences_list[self.current_sentence_number])
                 pygame.mixer.music.play()
                 paused = False
         else:
@@ -135,18 +123,21 @@ class SentencesPlayer:
 
     def nextSentence(self):
 
+        # Exception Handling for the End of Sentences
         try:
-            self.next_music = (self.Week_Sentences_List[self.music_number + 1])
+            self.next_music = (self.Week_Sentences_List[self.current_sentence_number + 1])
         except IndexError:
-            messagebox.showerror('End of the Sentences', 'You have completed all the sentences!')
+            messagebox.showerror('End of the Sentences', 'You have completed all the sentences. Thank you!')
 
-        self.current_music = (self.Week_Sentences_List[self.music_number])
+        self.current_sentence = (self.Week_Sentences_List[self.current_sentence_number])
 
+        # Putting the Next Track in the List as the Main Track
         pygame.mixer.music.stop()
-        self.music_number = int(self.music_number2 + 1)
-        self.music_number2 = self.music_number
-        current_music = (self.complete_sentences_list[self.music_number])
-        pygame.mixer.music.load(current_music)
+        self.current_sentence_number = int(self.current_sentence_number2 + 1)
+        self.current_sentence_number2 = self.current_sentence_number
+
+        current_sentence = (self.complete_sentences_list[self.current_sentence_number])
+        pygame.mixer.music.load(current_sentence)
 
     def submitSentence(self):
 
@@ -168,3 +159,5 @@ class SentencesPlayer:
                     Writer = writer(file)
                     Writer.writerow(self.main_list)
                     self.main_list = []
+
+            file.close()
