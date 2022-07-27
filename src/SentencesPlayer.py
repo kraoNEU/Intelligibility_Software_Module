@@ -1,7 +1,6 @@
 from tkinter import messagebox
 import pandas as pd
 import pygame
-import os
 from tkinter import *
 import random
 from csv import *
@@ -113,16 +112,13 @@ class SentencesPlayer:
         if pygame.mixer.get_init():
             if pygame.mixer.music.pause() is False:
                 pygame.mixer.music.play()
-                paused = True
             else:
                 pygame.mixer.music.load(self.complete_sentences_list[self.current_sentence_number])
                 pygame.mixer.music.play()
-                paused = False
         else:
             pygame.mixer.init()
             pygame.mixer.music.load(f"{current_sentence_playing}")
             pygame.mixer.music.play()
-            paused = False
 
     def nextSentence(self):
         """
@@ -153,7 +149,7 @@ class SentencesPlayer:
     def submitSentence(self):
         """
         The Text Box Input is read from the .get() method
-        The File is Inputted thru row-wise input
+        The File is Inputted through row-wise input
         The count is appended to the next row
         Return: None
         """
