@@ -31,14 +31,14 @@ The Scope of work is a GUI based Intelligibility Program. The Work is divided in
 
 **Figure: 1.1: Process Workflow of the Intelligibility Software Module.**
 
-Phase – I:
+**Phase – I:**
 
 The Phase – I, which is a simple GUI Console Application which would be implemented first wherein the Application has a simple Text Box for the Input and the User will be able to click on “Next” button to proceed to the Input Text box for the next audio file. 
 
 The Inputted text would be stored on an Excel sheet to be viewed. Later in the Phase – II module of the Program will be able to compare the Text Strings and to generate an Intelligibility Score of a particular Subject.
 
 
-Phase – II:
+**Phase – II:**
 
 The Phase – II, which is the Intelligibility Module which has the Text Comparison Operator which compares the word, **alphabet by alphabet** to general an Intelligibility score to the user.
 
