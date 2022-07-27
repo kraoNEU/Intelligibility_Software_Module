@@ -15,7 +15,7 @@ The goals of the software are to accomplish the following functions:
 1. Collect intelligibility data from listeners. This involves having an interface that:
    1. presents .wav files to listeners (study participants) in a randomized order
    1. provides a space for listeners to type in what they think the speaker said in each .wav file
-1. ` `Analyze intelligibility data. To do this the program must:
+1. Analyze intelligibility data. To do this the program must:
    1. Compare what the listener typed to the target sentence.
    1. Determine the number of words the listener got correct for each sentence.
    1. Calculate a % of words correctly identified across the entire sentence set. 
@@ -50,15 +50,8 @@ This will generate the metric to the user to track the Subject’s progress in t
 
 ***Phase-II:** Version – 1 (Last Week of August Planned, 2022)*<br>
 
-***Phase-III:** Improvements (if any) and Bug Fixes and Version Updates:*
-
-` `*(September, 2022 Planned)*
-
-
-
-
-
-
+***Phase-III:** Improvements (if any) and Bug Fixes and Version Updates:*<br>
+*(September, 2022 Planned)*
 
 #### **Existing Roadblocks or Technical Issues**
 
