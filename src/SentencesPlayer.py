@@ -71,9 +71,9 @@ class SentencesPlayer:
 
         # Creating the Background
         trackframe = LabelFrame(self.root, text="Sentences Input", font=("times new roman", 15),
-                                bg="Navyblue",
+                                bg="black",
                                 fg="white", bd=5, relief=GROOVE)
-        trackframe.place(x=0, y=0, width=800, height=100)
+        trackframe.place(x=0, y=0, width=600, height=100)
 
         # Creating a Text Widget For the Input
         self.Input_Text = Text(trackframe, width=83, height=5)

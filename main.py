@@ -8,7 +8,7 @@ root = Tk()
 root.title("Intelligibility Software Module for SMILe Lab")
 
 # Setting the Window
-root.geometry("1000x200+200+200")
+root.geometry("600x200+200+200")
 
 # Set the Logo of the Model
 root.iconbitmap("../Logo/Northeastern_University_seal.png")
