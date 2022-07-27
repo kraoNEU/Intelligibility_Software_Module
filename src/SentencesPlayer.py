@@ -63,8 +63,8 @@ class SentencesPlayer:
                 path = f"/Users/cvkrishnarao/Desktop/RA/Intelligibility_Software_Module/Test_File/Week_{weeks}/Sentence_{sentences}.wav"
 
                 # Checking for the file path. Future Version to Deprecate this. Based on Dynamic File Placement
-                if os.path.isfile(path):
-                    print(list_For_Csv)
+                # if os.path.isfile(path):
+                #     print(list_For_Csv)
                 self.complete_sentences_list.append(path)
 
         self.next_music = (self.complete_sentences_list[self.current_sentence_number + 1])
