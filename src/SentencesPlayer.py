@@ -1,4 +1,5 @@
 from tkinter import messagebox
+import pandas as pd
 import pygame
 import os
 from tkinter import *
@@ -16,6 +17,7 @@ class SentencesPlayer:
         """
         self.root = root
         self.count = 0
+        self.dataFrame = pd.DataFrame()
 
         # Week List
         Week_List = [1]
@@ -29,6 +31,7 @@ class SentencesPlayer:
         # List for Serial Number and the Index
         self.Week_Sentences_List = []
 
+        # Setting the Current Sentence Track
         self.current_sentence_number = int(0)
         self.current_sentence_number2 = self.current_sentence_number
 
@@ -59,7 +62,7 @@ class SentencesPlayer:
                 self.Week_Sentences_List.append(list_For_Csv)
                 path = f"/Users/cvkrishnarao/Desktop/RA/Intelligibility_Software_Module/Test_File/Week_{weeks}/Sentence_{sentences}.wav"
 
-                # Checking for this path in the future version to check and then append to the file
+                # Checking for the file path. Future Version to Deprecate this. Based on Dynamic File Placement
                 if os.path.isfile(path):
                     print(list_For_Csv)
                 self.complete_sentences_list.append(path)
@@ -122,13 +125,20 @@ class SentencesPlayer:
             paused = False
 
     def nextSentence(self):
+        """
+        Button Label to go to the next sentence. Checks till the end of sentences
+        Raises a Soft exception to handle to the message box()
+        return: Null to handle the soft exception
+        """
 
         # Exception Handling for the End of Sentences
         try:
             self.next_music = (self.Week_Sentences_List[self.current_sentence_number + 1])
         except IndexError:
             messagebox.showerror('End of the Sentences', 'You have completed all the sentences. Thank you!')
+            self.csvSerialNumber()
             self.root.destroy()
+            return
 
         self.current_sentence = (self.Week_Sentences_List[self.current_sentence_number])
 
@@ -141,17 +151,23 @@ class SentencesPlayer:
         pygame.mixer.music.load(current_sentence)
 
     def submitSentence(self):
+        """
+        The Text Box Input is read from the .get() method
+        The File is Inputted thru row-wise input
+        The count is appended to the next row
+        Return: None
+        """
 
         if self.Input_Text != "":
 
-            # gets() the character from starting to end of character
+            # get() the character from starting to end of character
             list_Text = self.Input_Text.get("1.0", 'end')
             self.main_list.append(list_Text)
-            with open("/Users/cvkrishnarao/Desktop/data_entry.csv", "a+", newline='\n') as file:
+            with open("/Users/cvkrishnarao/Desktop/Input_Sentences.csv", "a+", newline='\n') as file:
 
                 if self.count == 0:
                     Writer = writer(file)
-                    Writer.writerow(["Input Text"])
+                    Writer.writerow(["Input_Text"])
                     Writer.writerow(self.main_list)
                     self.main_list = []
                     self.count += 1
@@ -164,4 +180,11 @@ class SentencesPlayer:
             file.close()
 
     def csvSerialNumber(self):
-        pass
+        """
+        Reads the csv file with all the Inputted sentences
+        Appends the Serial Numbers that is week and sentence numbers to the csv file
+        return: Returns the csv file with the serial number
+        """
+        self.dataFrame = pd.read_csv("/Users/cvkrishnarao/Desktop/Input_Sentences.csv")
+        self.dataFrame.insert(0, "Serial_Number", self.Week_Sentences_List)
+        self.dataFrame.to_csv("/Users/cvkrishnarao/Desktop/Input_Sentences.csv")
