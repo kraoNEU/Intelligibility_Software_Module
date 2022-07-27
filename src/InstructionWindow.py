@@ -10,8 +10,8 @@ class InstructionWindow:
     """
     def __init__(self, root):
         messagebox.showinfo(title="Instruction",
-                            message="Before you begin\n"
-                                    "This is a second Statement\n"
-                                    "Multiple Line execution\n"
-                                    "Check for Big Messages\n")
+                            message="Before you begin:\n"
+                                    "This is a Line 1\n"
+                                    "This is a Line 2\n"
+                                    "This is a Line 3\n")
         return
