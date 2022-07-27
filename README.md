@@ -1,4 +1,4 @@
-# &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Intelligibility Software GUI Module for SMILe Lab
+# &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Intelligibility Software GUI Module for SMILe Lab
 
 ### Request For Proposal
 
@@ -29,7 +29,7 @@ The Scope of work is a GUI based Intelligibility Program. The Work is divided in
 
 ![Intelligibility GUI Module Workflow](Logo/software_workflow.png)
 
-Figure: 1.1: Process Workflow of the Intelligibility Software Module
+**Figure: 1.1: Process Workflow of the Intelligibility Software Module.**
 
 Phase – I:
 
