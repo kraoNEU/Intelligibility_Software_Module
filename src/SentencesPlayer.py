@@ -128,6 +128,7 @@ class SentencesPlayer:
             self.next_music = (self.Week_Sentences_List[self.current_sentence_number + 1])
         except IndexError:
             messagebox.showerror('End of the Sentences', 'You have completed all the sentences. Thank you!')
+            self.root.destroy()
 
         self.current_sentence = (self.Week_Sentences_List[self.current_sentence_number])
 
@@ -161,3 +162,6 @@ class SentencesPlayer:
                     self.main_list = []
 
             file.close()
+
+    def csvSerialNumber(self):
+        pass
