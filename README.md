@@ -75,7 +75,7 @@ This will generate the metric to the user to track the Subject’s progress in t
 
 #### **Contact Information**
 
-For questions or concerns connected to this RFP, we can be reached at:<br>
+For questions or concerns connected to this RFP, you can reach at:<br>
 
 #### Prepared by:
 **Name**: C V Krishna Rao, <BR>
