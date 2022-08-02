@@ -1,6 +1,6 @@
 from tkinter import *
 from src.SentencesPlayer import SentencesPlayer
-from src.InstructionWindow import *
+from src.StartupInstructionWindow import *
 
 # Initialise the Tkinter Window
 root = Tk()

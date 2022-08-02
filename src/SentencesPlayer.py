@@ -4,6 +4,7 @@ import pygame
 from tkinter import *
 import random
 from csv import *
+from src import SubmitInstructionWindow
 
 
 class SentencesPlayer:
@@ -29,6 +30,10 @@ class SentencesPlayer:
 
         # List for Serial Number and the Index
         self.Week_Sentences_List = []
+
+        # Setting the Instruction Logo
+        img = PhotoImage(file='Logo/warning_logo.png')
+        root.tk.call('wm', 'iconphoto', self.root._w, img)
 
         # Setting the Current Sentence Track
         self.current_sentence_number = int(0)
@@ -129,8 +134,15 @@ class SentencesPlayer:
 
         # Exception Handling for the End of Sentences
         try:
+
+            SubmitInstructionWindow.InstructionWindow(self.root)
             self.next_music = (self.Week_Sentences_List[self.current_sentence_number + 1])
+
         except IndexError:
+
+            # Setting the Completion Logo
+            img = PhotoImage(file='Logo/completed_logo.png')
+            self.root.tk.call('wm', 'iconphoto', self.root._w, img)
             messagebox.showerror('End of the Sentences', 'You have completed all the sentences. Thank you!')
             self.csvSerialNumber()
             self.root.destroy()
@@ -174,6 +186,7 @@ class SentencesPlayer:
                     self.main_list = []
 
             file.close()
+        self.Input_Text.delete('1.0', END)
 
     def csvSerialNumber(self):
         """
