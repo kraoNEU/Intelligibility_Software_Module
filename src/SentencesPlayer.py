@@ -64,7 +64,7 @@ class SentencesPlayer:
             for sentences in Sentences_List:
                 list_For_Csv = f"W{weeks}_S{sentences}"
                 self.Week_Sentences_List.append(list_For_Csv)
-                path = f"Test_File/Week_{weeks}/Sentence_{sentences}.wav"
+                path = f"Sentences_File/Week_{weeks}/Sentence_{sentences}.wav"
 
                 # Checking for the file path. Future Version to Deprecate this. Based on Dynamic File Placement
                 # if os.path.isfile(path):
@@ -171,7 +171,7 @@ class SentencesPlayer:
             # get() the character from starting to end of character
             list_Text = self.Input_Text.get("1.0", 'end')
             self.main_list.append(list_Text)
-            with open("/Users/cvkrishnarao/Desktop/Input_Sentences.csv", "a+", newline='\n') as file:
+            with open("Input_Sentences/Input_Sentences.csv", "a+", newline='\n') as file:
 
                 if self.count == 0:
                     Writer = writer(file)
@@ -194,6 +194,6 @@ class SentencesPlayer:
         Appends the Serial Numbers that is week and sentence numbers to the csv file
         return: Returns the csv file with the serial number
         """
-        self.dataFrame = pd.read_csv("/Users/cvkrishnarao/Desktop/Input_Sentences.csv")
+        self.dataFrame = pd.read_csv("Input_Sentences/Input_Sentences.csv")
         self.dataFrame.insert(0, "Serial_Number", self.Week_Sentences_List)
-        self.dataFrame.to_csv("/Users/cvkrishnarao/Desktop/Input_Sentences.csv")
+        self.dataFrame.to_csv("Input_Sentences/Input_Sentences.csv")
