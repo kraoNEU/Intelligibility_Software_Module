@@ -64,7 +64,7 @@ class SentencesPlayer:
             for sentences in Sentences_List:
                 list_For_Csv = f"W{weeks}_S{sentences}"
                 self.Week_Sentences_List.append(list_For_Csv)
-                path = f"/Users/cvkrishnarao/Desktop/RA/Intelligibility_Software_Module/Test_File/Week_{weeks}/Sentence_{sentences}.wav"
+                path = f"Test_File/Week_{weeks}/Sentence_{sentences}.wav"
 
                 # Checking for the file path. Future Version to Deprecate this. Based on Dynamic File Placement
                 # if os.path.isfile(path):

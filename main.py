@@ -28,7 +28,7 @@ InstructionWindow(root)
 # Set the Logo of the Model
 # root.iconbitmap("/Users/cvkrishnarao/Desktop/RA/Intelligibility_Software_Module/Logo/Northeastern_Huskies_logo.png")
 
-img = PhotoImage(file='/Users/cvkrishnarao/Desktop/RA/Intelligibility_Software_Module/Logo/Northeastern_Huskies_logo.png')
+img = PhotoImage(file='Logo/Northeastern_Huskies_logo.png')
 root.tk.call('wm', 'iconphoto', root._w, img)
 
 # Set the SentencePlayer Window
