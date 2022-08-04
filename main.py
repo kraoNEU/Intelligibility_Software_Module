@@ -1,7 +1,5 @@
 import os
 from tkinter import *
-from tkinter.filedialog import askdirectory
-
 from src.SentencesPlayer import SentencesPlayer
 from src.StartupInstructionWindow import *
 
@@ -23,9 +21,6 @@ root.tk.call('wm', 'iconphoto', root._w, img)
 
 # Set the Instruction Window
 InstructionWindow(root)
-
-# Set the Logo of the Model
-# root.iconbitmap("/Users/cvkrishnarao/Desktop/RA/Intelligibility_Software_Module/Logo/Northeastern_Huskies_logo.png")
 
 img = PhotoImage(file='Logo/Northeastern_Huskies_logo.png')
 root.tk.call('wm', 'iconphoto', root._w, img)
