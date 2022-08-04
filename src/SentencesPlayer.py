@@ -19,6 +19,9 @@ class SentencesPlayer:
         self.count = 0
         self.dataFrame = pd.DataFrame()
 
+        # Deprecated Warning!!!!: For the Next Version we could look at the Radio Button type Implementation which could
+        # Automatically Check for the Week and the Sentences list
+
         # Week List
         Week_List = [1, 2, 3, 4, 5, 6]
 
