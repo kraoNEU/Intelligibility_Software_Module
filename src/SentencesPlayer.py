@@ -1,3 +1,4 @@
+import os
 from tkinter import messagebox
 import pandas as pd
 import pygame
@@ -23,10 +24,10 @@ class SentencesPlayer:
         # Automatically Check for the Week and the Sentences list
 
         # Week List
-        Week_List = [1, 2, 3, 4, 5, 6]
+        Week_List = [1]
 
         # Sentences List
-        Sentences_List = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        Sentences_List = [1, 2, 3, 4, 5, 6]
 
         # Writing the Main Sentences from Text Box
         self.main_list = []
@@ -169,24 +170,45 @@ class SentencesPlayer:
         Return: None
         """
 
-        if self.Input_Text != "":
+        if os.path.exists("Input_Sentences/"):
+            if self.Input_Text != "":
 
-            # get() the character from starting to end of character
-            list_Text = self.Input_Text.get("1.0", 'end')
-            self.main_list.append(list_Text)
-            with open("Input_Sentences/Input_Sentences.csv", "a+") as file:
+                # get() the character from starting to end of character
+                list_Text = self.Input_Text.get("1.0", 'end')
+                self.main_list.append(list_Text)
+                with open("Input_Sentences/Input_Sentences.csv", "a+") as file:
 
-                if self.count == 0:
-                    Writer = writer(file)
-                    Writer.writerow(["Input_Text"])
-                    Writer.writerow(self.main_list)
-                    self.main_list = []
-                    self.count += 1
+                    if self.count == 0:
+                        Writer = writer(file)
+                        Writer.writerow(["Input_Text"])
+                        Writer.writerow(self.main_list)
+                        self.main_list = []
+                        self.count += 1
 
-                else:
-                    Writer = writer(file)
-                    Writer.writerow(self.main_list)
-                    self.main_list = []
+                    else:
+                        Writer = writer(file)
+                        Writer.writerow(self.main_list)
+                        self.main_list = []
+        else:
+            os.mkdir("Input_Sentences/")
+            if self.Input_Text != "":
+
+                # get() the character from starting to end of character
+                list_Text = self.Input_Text.get("1.0", 'end')
+                self.main_list.append(list_Text)
+                with open("Input_Sentences/Input_Sentences.csv", "a+") as file:
+
+                    if self.count == 0:
+                        Writer = writer(file)
+                        Writer.writerow(["Input_Text"])
+                        Writer.writerow(self.main_list)
+                        self.main_list = []
+                        self.count += 1
+
+                    else:
+                        Writer = writer(file)
+                        Writer.writerow(self.main_list)
+                        self.main_list = []
 
             file.close()
         self.Input_Text.delete('1.0', END)
