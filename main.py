@@ -1,17 +1,14 @@
 import os
 from tkinter import *
 from tkinter.filedialog import askdirectory
-
 from src.SentencesPlayer import SentencesPlayer
 from src.StartupInstructionWindow import *
 
 # Initialise the Tkinter Window
 root = Tk()
 
-scriptDir = os.getcwd()
 directory = askdirectory()
 os.chdir(directory)
-os.chdir(scriptDir)
 
 # Set the Window Title
 root.title("Intelligibility Software Module for SMILe Lab")
