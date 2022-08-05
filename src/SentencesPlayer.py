@@ -24,10 +24,10 @@ class SentencesPlayer:
         # Automatically Check for the Week and the Sentences list
 
         # Week List
-        Week_List = [1]
+        Week_List = [1, 2, 3, 4, 5, 6]
 
         # Sentences List
-        Sentences_List = [1, 2, 3, 4, 5, 6]
+        Sentences_List = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
         # Writing the Main Sentences from Text Box
         self.main_list = []
