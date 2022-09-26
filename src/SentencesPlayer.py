@@ -1,4 +1,6 @@
+import csv
 import os
+import tkinter
 from tkinter import messagebox
 import pandas as pd
 import pygame
@@ -19,25 +21,21 @@ class SentencesPlayer:
         self.root = root
         self.count = 0
         self.dataFrame = pd.DataFrame()
-
-        # Deprecated Warning!!!!: For the Next Version we could look at the Radio Button type Implementation which could
-        # Automatically Check for the Week and the Sentences list
+        self.set_current_csv_input_sentences_file_path = ''
 
         # Week List
-        Week_List = [1, 2, 3, 4, 5, 6]
+        Week_List = [1, 2]
 
         # Sentences List
-        Sentences_List = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+        Sentences_List = [1, 2, 3, 4]
 
         # Writing the Main Sentences from Text Box
         self.main_list = []
 
+        self.set_current_csv_input_sentences_file_path = os.getcwd().split("/")[-1]
+
         # List for Serial Number and the Index
         self.Week_Sentences_List = []
-
-        # Setting the Instruction Logo
-        img = PhotoImage(file='Logo/warning_logo.png')
-        root.tk.call('wm', 'iconphoto', self.root._w, img)
 
         # Setting the Current Sentence Track
         self.current_sentence_number = int(0)
@@ -62,18 +60,23 @@ class SentencesPlayer:
 
         # Shuffle the Random Sentences
         random.shuffle(Sentences_List)
+        
+        # Sentences Index List for the Index Update
+        self.sentences_index_list = []
 
         # Creating random week and sentences list
         for weeks in Week_List:
             for sentences in Sentences_List:
                 list_For_Csv = f"W{weeks}_S{sentences}"
                 self.Week_Sentences_List.append(list_For_Csv)
-                path = f"Sentences_File/Week_{weeks}/Sentence_{sentences}.wav"
+                path = f"Week_{weeks}/Sentence_{sentences}.wav"
 
-                # Checking for the file path. Future Version to Deprecate this. Based on Dynamic File Placement
-                # if os.path.isfile(path):
-                #     print(list_For_Csv)
-                self.complete_sentences_list.append(path)
+                # Condition Check for the Path. If not It will continue
+                if os.path.isfile(path):
+                    self.complete_sentences_list.append(path)
+                    self.sentences_index_list.append(list_For_Csv)
+                else:
+                    continue
 
         self.next_music = (self.complete_sentences_list[self.current_sentence_number + 1])
         self.current_sentence = (self.complete_sentences_list[self.current_sentence_number])
@@ -82,16 +85,24 @@ class SentencesPlayer:
         trackframe = LabelFrame(self.root, text="Sentences Input", font=("times new roman", 15),
                                 bg="black",
                                 fg="white", bd=5, relief=GROOVE)
-        trackframe.place(x=0, y=0, width=600, height=100)
+        trackframe.place(x=0, y=100, width=600, height=100)
 
         # Creating a Text Widget For the Input
         self.Input_Text = Text(trackframe, width=83, height=5)
         self.Input_Text.grid(row=50, column=50)
 
+        # Inserting Instruction Window
+        text = Text(self.root, width=50, height=30, background=
+        "gray71", foreground="#fff", font=('Sans Serif', 13, 'italic bold'))
+        text.place(x=0, y=0, width=600, height=100)
+
+        # Insert the text at the beginning
+        text.insert(INSERT, "Write Something About Yourself")
+
         # Creating Button Frame
         buttonframe = LabelFrame(self.root, text="Control Panel", font=("times new roman", 15, "bold"), bg="grey",
                                  fg="white", bd=5, relief=GROOVE)
-        buttonframe.place(x=0, y=100, width=600, height=100)
+        buttonframe.place(x=0, y=200, width=600, height=100)
 
         # Inserting Play Button
         Button(buttonframe, text="Play / Replay", command=self.playSentence, width=10, height=1,
@@ -100,11 +111,6 @@ class SentencesPlayer:
         # Inserting Next Button
         Button(buttonframe, text="Next", command=self.nextSentence, width=8, height=1,
                font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=1, padx=10,
-                                                                                    pady=5)
-
-        # Inserting Submit Button
-        Button(buttonframe, text="Submit", command=self.submitSentence, width=10, height=1,
-               font=("times new roman", 16, "bold"), fg="navyblue", bg="pink").grid(row=0, column=2, padx=10,
                                                                                     pady=5)
 
     def playSentence(self):
@@ -141,18 +147,100 @@ class SentencesPlayer:
 
             SubmitInstructionWindow.InstructionWindow(self.root)
             self.next_music = (self.Week_Sentences_List[self.current_sentence_number + 1])
+            self.current_sentence = (self.Week_Sentences_List[self.current_sentence_number])
+            if os.path.exists("Input_Sentences/"):
+                if self.Input_Text != "":
+
+                    # get() the character from starting to end of character
+                    list_Text = self.Input_Text.get("1.0", 'end')
+                    list_Text = list_Text.strip()
+                    self.main_list.append(list_Text)
+                    with open(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv", "a+") as file:
+
+                        if self.count == 0:
+
+                            self.main_list.append(self.sentences_index_list[self.count])
+                            writer = csv.writer(file, delimiter=",")
+                            writer.writerow(('Sentences', 'Index'))
+                            writer.writerow(self.main_list)
+
+                            self.main_list = []
+                            self.count += 1
+
+                        else:
+
+                            self.main_list.append(self.sentences_index_list[self.count])
+                            writer = csv.writer(file, delimiter=",")
+                            writer.writerow(self.main_list)
+
+                            self.main_list = []
+                            self.count += 1
+            else:
+                os.mkdir("Input_Sentences/")
+                if self.Input_Text != "":
+
+                    # get() the character from starting to end of character
+                    list_Text = self.Input_Text.get("1.0", 'end')
+                    list_Text = list_Text.strip()
+                    self.main_list.append(list_Text)
+                    with open(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv", "a+") as file:
+
+                        if self.count == 0:
+
+                            self.main_list.append(self.sentences_index_list[self.count])
+                            writer = csv.writer(file, delimiter=",")
+                            writer.writerow(('Sentences', 'Index'))
+                            writer.writerow(self.main_list)
+
+                            self.main_list = []
+                            self.count += 1
+
+                        else:
+
+                            self.main_list.append(self.sentences_index_list[self.count])
+                            writer = csv.writer(file, delimiter=",")
+                            writer.writerows(self.main_list)
+
+                            self.main_list = []
+                            self.count += 1
+
+                file.close()
+            self.Input_Text.delete('1.0', END)
 
         except IndexError:
 
+            list_Text = self.Input_Text.get("1.0", 'end')
+            list_Text = list_Text.strip()
+            self.main_list.append(list_Text)
+            with open(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv", "a+") as file:
+
+                if self.count == 0:
+
+                    self.main_list.append(self.sentences_index_list[self.count])
+                    writer = csv.writer(file, delimiter=",")
+                    writer.writerow(('Sentences', 'Index'))
+                    writer.writerow(self.main_list)
+
+                    self.main_list = []
+                    self.count += 1
+
+                else:
+
+                    self.main_list.append(self.sentences_index_list[self.count])
+                    writer = csv.writer(file, delimiter=",")
+
+                    writer.writerow(self.main_list)
+
+                    self.main_list = []
+                    self.count += 1
+
             # Setting the Completion Logo
-            img = PhotoImage(file='Logo/completed_logo.png')
-            self.root.tk.call('wm', 'iconphoto', self.root._w, img)
+            # img = PhotoImage(file='Logo/completed_logo.png')
+            # self.root.tk.call('wm', 'iconphoto', self.root._w, img)
             messagebox.showerror('End of the Sentences', 'You have completed all the sentences. Thank you!')
             self.csvSerialNumber()
             self.root.destroy()
             return
-
-        self.current_sentence = (self.Week_Sentences_List[self.current_sentence_number])
 
         # Putting the Next Track in the List as the Main Track
         pygame.mixer.music.stop()
@@ -162,64 +250,13 @@ class SentencesPlayer:
         current_sentence = (self.complete_sentences_list[self.current_sentence_number])
         pygame.mixer.music.load(current_sentence)
 
-    def submitSentence(self):
-        """
-        The Text Box Input is read from the .get() method
-        The File is Inputted through row-wise input
-        The count is appended to the next row
-        Return: None
-        """
-
-        if os.path.exists("Input_Sentences/"):
-            if self.Input_Text != "":
-
-                # get() the character from starting to end of character
-                list_Text = self.Input_Text.get("1.0", 'end')
-                self.main_list.append(list_Text)
-                with open("Input_Sentences/Input_Sentences.csv", "a+") as file:
-
-                    if self.count == 0:
-                        Writer = writer(file)
-                        Writer.writerow(["Input_Text"])
-                        Writer.writerow(self.main_list)
-                        self.main_list = []
-                        self.count += 1
-
-                    else:
-                        Writer = writer(file)
-                        Writer.writerow(self.main_list)
-                        self.main_list = []
-        else:
-            os.mkdir("Input_Sentences/")
-            if self.Input_Text != "":
-
-                # get() the character from starting to end of character
-                list_Text = self.Input_Text.get("1.0", 'end')
-                self.main_list.append(list_Text)
-                with open("Input_Sentences/Input_Sentences.csv", "a+") as file:
-
-                    if self.count == 0:
-                        Writer = writer(file)
-                        Writer.writerow(["Input_Text"])
-                        Writer.writerow(self.main_list)
-                        self.main_list = []
-                        self.count += 1
-
-                    else:
-                        Writer = writer(file)
-                        Writer.writerow(self.main_list)
-                        self.main_list = []
-
-            file.close()
-        self.Input_Text.delete('1.0', END)
-
     def csvSerialNumber(self):
         """
         Reads the csv file with all the Inputted sentences
         Appends the Serial Numbers that is week and sentence numbers to the csv file
         return: Returns the csv file with the serial number
         """
-        self.dataFrame = pd.read_csv("Input_Sentences/Input_Sentences.csv")
+        self.dataFrame = pd.read_csv(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv")
         self.dataFrame.insert(0, "Serial_Number", self.Week_Sentences_List)
-        self.dataFrame.to_csv("Input_Sentences/Input_Sentences.csv")
-        self.dataFrame.to_excel("Input_Sentences/Input_Sentences.xlsx")
+        self.dataFrame.to_csv(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv")
+        self.dataFrame.to_excel(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.xlsx")
