@@ -1,13 +1,10 @@
 import csv
 import os
-import tkinter
 from tkinter import messagebox
 import pandas as pd
 import pygame
 from tkinter import *
 import random
-from csv import *
-from src import SubmitInstructionWindow
 
 
 class SentencesPlayer:
@@ -22,6 +19,7 @@ class SentencesPlayer:
         self.count = 0
         self.dataFrame = pd.DataFrame()
         self.set_current_csv_input_sentences_file_path = ''
+        self.Person_Index_append =''
 
         # Week List
         Week_List = [1, 2]
@@ -33,6 +31,7 @@ class SentencesPlayer:
         self.main_list = []
 
         self.set_current_csv_input_sentences_file_path = os.getcwd().split("/")[-1]
+        self.Person_Index_append = self.set_current_csv_input_sentences_file_path[0]+self.set_current_csv_input_sentences_file_path[-1]
 
         # List for Serial Number and the Index
         self.Week_Sentences_List = []
@@ -67,7 +66,7 @@ class SentencesPlayer:
         # Creating random week and sentences list
         for weeks in Week_List:
             for sentences in Sentences_List:
-                list_For_Csv = f"W{weeks}_S{sentences}"
+                list_For_Csv = f"{self.Person_Index_append}_W{weeks}_S{sentences}"
                 self.Week_Sentences_List.append(list_For_Csv)
                 path = f"Week_{weeks}/Sentence_{sentences}.wav"
 
@@ -145,7 +144,6 @@ class SentencesPlayer:
         # Exception Handling for the End of Sentences
         try:
 
-            SubmitInstructionWindow.InstructionWindow(self.root)
             self.next_music = (self.Week_Sentences_List[self.current_sentence_number + 1])
             self.current_sentence = (self.Week_Sentences_List[self.current_sentence_number])
             if os.path.exists("Input_Sentences/"):
@@ -234,9 +232,6 @@ class SentencesPlayer:
                     self.main_list = []
                     self.count += 1
 
-            # Setting the Completion Logo
-            # img = PhotoImage(file='Logo/completed_logo.png')
-            # self.root.tk.call('wm', 'iconphoto', self.root._w, img)
             messagebox.showerror('End of the Sentences', 'You have completed all the sentences. Thank you!')
             self.csvSerialNumber()
             self.root.destroy()
@@ -257,6 +252,4 @@ class SentencesPlayer:
         return: Returns the csv file with the serial number
         """
         self.dataFrame = pd.read_csv(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv")
-        self.dataFrame.insert(0, "Serial_Number", self.Week_Sentences_List)
-        self.dataFrame.to_csv(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv")
-        self.dataFrame.to_excel(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.xlsx")
+        self.dataFrame.to_excel(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.xlsx", index=False)
