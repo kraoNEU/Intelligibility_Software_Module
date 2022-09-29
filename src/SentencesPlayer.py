@@ -19,7 +19,10 @@ class SentencesPlayer:
         self.count = 0
         self.dataFrame = pd.DataFrame()
         self.set_current_csv_input_sentences_file_path = ''
-        self.Person_Index_append =''
+        self.Person_Index_append = ''
+
+        # Music Counter Checker
+        self.sentence_count_repeat = 0
 
         # Week List
         Week_List = [1, 2]
@@ -31,7 +34,8 @@ class SentencesPlayer:
         self.main_list = []
 
         self.set_current_csv_input_sentences_file_path = os.getcwd().split("/")[-1]
-        self.Person_Index_append = self.set_current_csv_input_sentences_file_path[0]+self.set_current_csv_input_sentences_file_path[-1]
+        self.Person_Index_append = self.set_current_csv_input_sentences_file_path[0] + \
+                                   self.set_current_csv_input_sentences_file_path[-1]
 
         # List for Serial Number and the Index
         self.Week_Sentences_List = []
@@ -46,6 +50,7 @@ class SentencesPlayer:
         # Initiating Pygame
         pygame.init()
 
+        # String Input for Text Box
         self.Input_Text = StringVar()
 
         # Initiating Pygame Mixer
@@ -59,7 +64,7 @@ class SentencesPlayer:
 
         # Shuffle the Random Sentences
         random.shuffle(Sentences_List)
-        
+
         # Sentences Index List for the Index Update
         self.sentences_index_list = []
 
@@ -124,11 +129,16 @@ class SentencesPlayer:
 
         # Check for other Tracks in the List
         if pygame.mixer.get_init():
+
             if pygame.mixer.music.pause() is False:
                 pygame.mixer.music.play()
+
             else:
-                pygame.mixer.music.load(self.complete_sentences_list[self.current_sentence_number])
-                pygame.mixer.music.play()
+                if self.sentence_count_repeat == 0 or self.sentence_count_repeat == 1:
+                    pygame.mixer.music.load(self.complete_sentences_list[self.current_sentence_number])
+                    pygame.mixer.music.play()
+                    self.sentence_count_repeat += 1
+
         else:
             pygame.mixer.init()
             pygame.mixer.music.load(f"{current_sentence_playing}")
@@ -153,7 +163,8 @@ class SentencesPlayer:
                     list_Text = self.Input_Text.get("1.0", 'end')
                     list_Text = list_Text.strip()
                     self.main_list.append(list_Text)
-                    with open(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv", "a+") as file:
+                    with open(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv",
+                              "a+") as file:
 
                         if self.count == 0:
 
@@ -164,6 +175,7 @@ class SentencesPlayer:
 
                             self.main_list = []
                             self.count += 1
+                            self.sentence_count_repeat = 0
 
                         else:
 
@@ -173,6 +185,7 @@ class SentencesPlayer:
 
                             self.main_list = []
                             self.count += 1
+                            self.sentence_count_repeat = 0
             else:
                 os.mkdir("Input_Sentences/")
                 if self.Input_Text != "":
@@ -181,7 +194,8 @@ class SentencesPlayer:
                     list_Text = self.Input_Text.get("1.0", 'end')
                     list_Text = list_Text.strip()
                     self.main_list.append(list_Text)
-                    with open(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv", "a+") as file:
+                    with open(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv",
+                              "a+") as file:
 
                         if self.count == 0:
 
@@ -192,6 +206,7 @@ class SentencesPlayer:
 
                             self.main_list = []
                             self.count += 1
+                            self.sentence_count_repeat = 0
 
                         else:
 
@@ -201,6 +216,7 @@ class SentencesPlayer:
 
                             self.main_list = []
                             self.count += 1
+                            self.sentence_count_repeat = 0
 
                 file.close()
             self.Input_Text.delete('1.0', END)
@@ -210,7 +226,8 @@ class SentencesPlayer:
             list_Text = self.Input_Text.get("1.0", 'end')
             list_Text = list_Text.strip()
             self.main_list.append(list_Text)
-            with open(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv", "a+") as file:
+            with open(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv",
+                      "a+") as file:
 
                 if self.count == 0:
 
@@ -221,6 +238,7 @@ class SentencesPlayer:
 
                     self.main_list = []
                     self.count += 1
+                    self.sentence_count_repeat = 0
 
                 else:
 
@@ -231,6 +249,7 @@ class SentencesPlayer:
 
                     self.main_list = []
                     self.count += 1
+                    self.sentence_count_repeat = 0
 
             messagebox.showerror('End of the Sentences', 'You have completed all the sentences. Thank you!')
             self.csvSerialNumber()
@@ -244,6 +263,7 @@ class SentencesPlayer:
 
         current_sentence = (self.complete_sentences_list[self.current_sentence_number])
         pygame.mixer.music.load(current_sentence)
+        self.sentence_count_repeat = 0
 
     def csvSerialNumber(self):
         """
@@ -251,5 +271,7 @@ class SentencesPlayer:
         Appends the Serial Numbers that is week and sentence numbers to the csv file
         return: Returns the csv file with the serial number
         """
-        self.dataFrame = pd.read_csv(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv")
-        self.dataFrame.to_excel(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.xlsx", index=False)
+        self.dataFrame = pd.read_csv(
+            f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv")
+        self.dataFrame.to_excel(
+            f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.xlsx", index=False)
