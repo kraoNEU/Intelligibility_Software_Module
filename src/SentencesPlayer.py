@@ -1,5 +1,6 @@
 import csv
 import os
+from difflib import SequenceMatcher
 from tkinter import messagebox
 import pandas as pd
 import pygame
@@ -18,7 +19,11 @@ class SentencesPlayer:
 
         self.root = root
         self.count = 0
-        self.dataFrame = pd.DataFrame()
+        self.Input_Sentences_df = pd.DataFrame()
+        self.Compare_Sentences_df = pd.DataFrame()
+        self.Intelligibility_Sentences_df = pd.DataFrame()
+        self.Intelligibility_List = []
+
         self.set_current_csv_input_sentences_file_path = ''
         self.Person_Index_append = ''
 
@@ -26,10 +31,10 @@ class SentencesPlayer:
         self.sentence_count_repeat = 0
 
         # Week List
-        Week_List = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12]
+        Week_List = list(range(1, 20))
 
         # Sentences List
-        Sentences_List = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12]
+        Sentences_List = list(range(1, 20))
 
         # Writing the Main Sentences from Text Box
         self.main_list = []
@@ -180,7 +185,7 @@ class SentencesPlayer:
 
                             self.main_list.append(self.sentences_index_list[self.count])
                             writer = csv.writer(file, delimiter=",")
-                            writer.writerow(('Sentences', 'Index'))
+                            writer.writerow(('INPUT_SENTENCE', 'NAME'))
                             writer.writerow(self.main_list)
 
                             self.main_list = []
@@ -211,7 +216,7 @@ class SentencesPlayer:
 
                             self.main_list.append(self.sentences_index_list[self.count])
                             writer = csv.writer(file, delimiter=",")
-                            writer.writerow(('Sentences', 'Index'))
+                            writer.writerow(('INPUT_SENTENCE', 'NAME'))
                             writer.writerow(self.main_list)
 
                             self.main_list = []
@@ -243,7 +248,7 @@ class SentencesPlayer:
 
                     self.main_list.append(self.sentences_index_list[self.count])
                     writer = csv.writer(file, delimiter=",")
-                    writer.writerow(('Sentences', 'Index'))
+                    writer.writerow(('INPUT_SENTENCE', 'NAME'))
                     writer.writerow(self.main_list)
 
                     self.main_list = []
@@ -262,7 +267,7 @@ class SentencesPlayer:
                     self.sentence_count_repeat = 0
 
             messagebox.showerror('End of the Sentences', 'You have completed all the sentences. Thank you!')
-            self.csvSerialNumber()
+            self.getIntelligibilityScore()
             self.root.destroy()
             return
 
@@ -275,14 +280,36 @@ class SentencesPlayer:
         pygame.mixer.music.load(current_sentence)
         self.sentence_count_repeat = 0
 
-    def csvSerialNumber(self):
+    def getIntelligibilityScore(self):
         """
         Reads the csv file with all the Inputted sentences
         Appends the Serial Numbers that is week and sentence numbers to the csv file
         return: Returns the csv file with the serial number
         """
-        self.dataFrame = pd.read_csv(
-            f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv")
 
-        self.dataFrame.to_excel(
-            f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.xlsx", index=False)
+        # Get Input Sentences
+        self.Input_Sentences_df = pd.read_csv(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv")
+
+        # Get Comparison Sentences
+        self.Compare_Sentences_df = pd.read_excel(f"Comparison_Sentences/SIT_{self.set_current_csv_input_sentences_file_path}.xlsx")
+
+        # Merge both Files
+        self.Intelligibility_Sentences_df = pd.merge(self.Input_Sentences_df, self.Compare_Sentences_df)
+
+        list_sentences = list(self.Compare_Sentences_df['SENTENCES'])
+        list_input_sentences = list(self.Input_Sentences_df['INPUT_SENTENCE'])
+
+        for i in range(len(list_sentences)):
+            ratio = SequenceMatcher(None, list_sentences[i].lower(), list_input_sentences[i].lower()).ratio()
+            self.Intelligibility_List.append(ratio)
+
+        # Adding a Frame of Intelligibility Score
+        self.Intelligibility_Sentences_df["INTELLIGIBILITY_SCORE"] = pd.DataFrame(self.Intelligibility_List)
+
+        os.mkdir("Intelligibility_Score/")
+
+        # Exporting a CSV frame
+        self.Intelligibility_Sentences_df.to_csv(f"Intelligibility_Score/Intelligibility_Score_{self.set_current_csv_input_sentences_file_path}.csv", index=None)
+
+        # Exporting to Excel Frame
+        self.Intelligibility_Sentences_df.to_excel(f"Intelligibility_Score/Intelligibility_Score_{self.set_current_csv_input_sentences_file_path}.xlsx", index=None)
