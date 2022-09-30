@@ -283,5 +283,6 @@ class SentencesPlayer:
         """
         self.dataFrame = pd.read_csv(
             f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv")
+
         self.dataFrame.to_excel(
             f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.xlsx", index=False)
