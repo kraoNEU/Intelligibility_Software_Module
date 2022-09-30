@@ -173,7 +173,7 @@ class SentencesPlayer:
 
             self.next_music = (self.sentences_index_list[self.current_sentence_number + 1])
             self.current_sentence = (self.sentences_index_list[self.current_sentence_number])
-            if os.path.exists("Input_Sentences/"):
+            if os.path.exists(f"Input_Sentences/"):
                 if self.Input_Text != "":
 
                     # get() the character from starting to end of character
@@ -204,7 +204,7 @@ class SentencesPlayer:
                             self.count += 1
                             self.sentence_count_repeat = 0
             else:
-                os.mkdir("Input_Sentences/")
+                os.mkdir(f"Input_Sentences/")
                 if self.Input_Text != "":
 
                     # get() the character from starting to end of character
