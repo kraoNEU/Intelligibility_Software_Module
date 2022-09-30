@@ -26,10 +26,10 @@ class SentencesPlayer:
         self.sentence_count_repeat = 0
 
         # Week List
-        Week_List = [1, 2, 3, 4, 5]
+        Week_List = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12]
 
         # Sentences List
-        Sentences_List = [1, 2, 3, 4, 5, 6, 7]
+        Sentences_List = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12]
 
         # Writing the Main Sentences from Text Box
         self.main_list = []
