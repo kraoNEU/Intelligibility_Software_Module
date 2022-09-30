@@ -316,6 +316,9 @@ class SentencesPlayer:
         self.Intelligibility_Sentences_df.to_csv(
             f"Intelligibility_Score/Intelligibility_Score.csv", index=None)
 
+        writer = pd.ExcelWriter('Intelligibility_Score/Intelligibility_Score.xlsx', engine='xlsxwriter')
+
         # Exporting to Excel Frame
-        self.Intelligibility_Sentences_df.to_excel(
-            f"Intelligibility_Score/Intelligibility_Score.xlsx", index=None)
+        self.Intelligibility_Sentences_df.to_excel(writer, sheet_name='Score_1')
+
+        writer.close()
