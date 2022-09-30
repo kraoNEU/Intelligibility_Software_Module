@@ -180,7 +180,7 @@ class SentencesPlayer:
                     list_Text = self.Input_Text.get("1.0", 'end')
                     list_Text = list_Text.strip()
                     self.main_list.append(list_Text)
-                    with open(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv",
+                    with open(f"Input_Sentences/Input_Sentences.csv",
                               "a+") as file:
 
                         if self.count == 0:
@@ -211,7 +211,7 @@ class SentencesPlayer:
                     list_Text = self.Input_Text.get("1.0", 'end')
                     list_Text = list_Text.strip()
                     self.main_list.append(list_Text)
-                    with open(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv",
+                    with open(f"Input_Sentences/Input_Sentences.csv",
                               "a+") as file:
 
                         if self.count == 0:
@@ -243,7 +243,7 @@ class SentencesPlayer:
             list_Text = self.Input_Text.get("1.0", 'end')
             list_Text = list_Text.strip()
             self.main_list.append(list_Text)
-            with open(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv",
+            with open(f"Input_Sentences/Input_Sentences.csv",
                       "a+") as file:
 
                 if self.count == 0:
@@ -291,11 +291,11 @@ class SentencesPlayer:
 
         # Get Input Sentences
         self.Input_Sentences_df = pd.read_csv(
-            f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv")
+            f"Input_Sentences/Input_Sentences.csv")
 
         # Get Comparison Sentences
         self.Compare_Sentences_df = pd.read_excel(
-            f"Comparison_Sentences/SIT_{self.set_current_csv_input_sentences_file_path}.xlsx")
+            f"Comparison_Sentences/SIT.xlsx")
 
         # Merge both Files
         self.Intelligibility_Sentences_df = pd.merge(self.Input_Sentences_df, self.Compare_Sentences_df)
@@ -314,10 +314,8 @@ class SentencesPlayer:
 
         # Exporting a CSV frame
         self.Intelligibility_Sentences_df.to_csv(
-            f"Intelligibility_Score/Intelligibility_Score_{self.set_current_csv_input_sentences_file_path}.csv",
-            index=None)
+            f"Intelligibility_Score/Intelligibility_Score.csv", index=None)
 
         # Exporting to Excel Frame
         self.Intelligibility_Sentences_df.to_excel(
-            f"Intelligibility_Score/Intelligibility_Score_{self.set_current_csv_input_sentences_file_path}.xlsx",
-            index=None)
+            f"Intelligibility_Score/Intelligibility_Score.xlsx", index=None)
