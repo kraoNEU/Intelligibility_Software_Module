@@ -15,6 +15,7 @@ class SentencesPlayer:
         Randomised the Files for the Sentences and Weeks
         Created all the Background Widgets and the Labels for the GUI Module
         """
+
         self.root = root
         self.count = 0
         self.dataFrame = pd.DataFrame()
@@ -25,15 +26,18 @@ class SentencesPlayer:
         self.sentence_count_repeat = 0
 
         # Week List
-        Week_List = [1, 2]
+        Week_List = [1, 2, 3, 4, 5]
 
         # Sentences List
-        Sentences_List = [1, 2, 3, 4]
+        Sentences_List = [1, 2, 3, 4, 5, 6, 7]
 
         # Writing the Main Sentences from Text Box
         self.main_list = []
 
+        # Getting the File Name Dynamically from the cwd()
         self.set_current_csv_input_sentences_file_path = os.getcwd().split("/")[-1]
+
+        # Getting the value to append the vallues to the Index columns of the csv and xlsx file
         self.Person_Index_append = self.set_current_csv_input_sentences_file_path[0] + \
                                    self.set_current_csv_input_sentences_file_path[-1]
 
@@ -71,6 +75,8 @@ class SentencesPlayer:
         # Creating random week and sentences list
         for weeks in Week_List:
             for sentences in Sentences_List:
+
+                # Creating the list of directories for the list of sentences taken from the dynamic user input
                 list_For_Csv = f"{self.Person_Index_append}_W{weeks}_S{sentences}"
                 self.Week_Sentences_List.append(list_For_Csv)
                 path = f"Week_{weeks}/Sentence_{sentences}.wav"
@@ -82,7 +88,10 @@ class SentencesPlayer:
                 else:
                     continue
 
+        # Keeping the music loaded onto the self.music platform
         self.next_music = (self.complete_sentences_list[self.current_sentence_number + 1])
+
+        # Keeping the current frame in the list as well
         self.current_sentence = (self.complete_sentences_list[self.current_sentence_number])
 
         # Creating the Background
@@ -133,6 +142,7 @@ class SentencesPlayer:
             if pygame.mixer.music.pause() is False:
                 pygame.mixer.music.play()
 
+            # Condition check for repetition, Repetition is allowed for only 2 times
             else:
                 if self.sentence_count_repeat == 0 or self.sentence_count_repeat == 1:
                     pygame.mixer.music.load(self.complete_sentences_list[self.current_sentence_number])
@@ -154,8 +164,8 @@ class SentencesPlayer:
         # Exception Handling for the End of Sentences
         try:
 
-            self.next_music = (self.Week_Sentences_List[self.current_sentence_number + 1])
-            self.current_sentence = (self.Week_Sentences_List[self.current_sentence_number])
+            self.next_music = (self.sentences_index_list[self.current_sentence_number + 1])
+            self.current_sentence = (self.sentences_index_list[self.current_sentence_number])
             if os.path.exists("Input_Sentences/"):
                 if self.Input_Text != "":
 
