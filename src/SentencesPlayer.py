@@ -115,7 +115,9 @@ class SentencesPlayer:
         text.place(x=0, y=0, width=600, height=100)
 
         # Insert the text at the beginning
-        text.insert(INSERT, "Write Something About Yourself")
+        text.insert(INSERT, "Before you begin:\n"
+                            "1) Please Listen Carefully!\n"
+                            "2) You may replay the sentence only one time.")
 
         # Creating Button Frame
         buttonframe = LabelFrame(self.root, text="Control Panel", font=("times new roman", 15, "bold"), bg="grey",
@@ -288,10 +290,12 @@ class SentencesPlayer:
         """
 
         # Get Input Sentences
-        self.Input_Sentences_df = pd.read_csv(f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv")
+        self.Input_Sentences_df = pd.read_csv(
+            f"Input_Sentences/Input_Sentences_{self.set_current_csv_input_sentences_file_path}.csv")
 
         # Get Comparison Sentences
-        self.Compare_Sentences_df = pd.read_excel(f"Comparison_Sentences/SIT_{self.set_current_csv_input_sentences_file_path}.xlsx")
+        self.Compare_Sentences_df = pd.read_excel(
+            f"Comparison_Sentences/SIT_{self.set_current_csv_input_sentences_file_path}.xlsx")
 
         # Merge both Files
         self.Intelligibility_Sentences_df = pd.merge(self.Input_Sentences_df, self.Compare_Sentences_df)
@@ -309,7 +313,11 @@ class SentencesPlayer:
         os.mkdir("Intelligibility_Score/")
 
         # Exporting a CSV frame
-        self.Intelligibility_Sentences_df.to_csv(f"Intelligibility_Score/Intelligibility_Score_{self.set_current_csv_input_sentences_file_path}.csv", index=None)
+        self.Intelligibility_Sentences_df.to_csv(
+            f"Intelligibility_Score/Intelligibility_Score_{self.set_current_csv_input_sentences_file_path}.csv",
+            index=None)
 
         # Exporting to Excel Frame
-        self.Intelligibility_Sentences_df.to_excel(f"Intelligibility_Score/Intelligibility_Score_{self.set_current_csv_input_sentences_file_path}.xlsx", index=None)
+        self.Intelligibility_Sentences_df.to_excel(
+            f"Intelligibility_Score/Intelligibility_Score_{self.set_current_csv_input_sentences_file_path}.xlsx",
+            index=None)
