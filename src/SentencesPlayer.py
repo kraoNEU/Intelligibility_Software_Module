@@ -307,8 +307,9 @@ class SentencesPlayer:
             ratio = SequenceMatcher(None, list_sentences[i].lower(), list_input_sentences[i].lower()).ratio()
             self.Intelligibility_List.append(ratio)
 
-        # self.Intelligibility_Sentences_df["SENTENCES"] = pd.DataFrame(self.Compare_Sentences_df['SENTENCES'])
-        # self.Intelligibility_Sentences_df["INPUT_SENTENCE"] = pd.DataFrame(self.Input_Sentences_df['INPUT_SENTENCE'])
+        self.Intelligibility_Sentences_df["SENTENCES"] = pd.DataFrame(self.Compare_Sentences_df['SENTENCES'])
+        self.Intelligibility_Sentences_df["INPUT_SENTENCE"] = pd.DataFrame(self.Input_Sentences_df['INPUT_SENTENCE'])
+        self.Intelligibility_Sentences_df["NAME"] = pd.DataFrame(self.Input_Sentences_df['NAME'])
 
         # Adding a Frame of Intelligibility Score
         self.Intelligibility_Sentences_df["INTELLIGIBILITY_SCORE"] = pd.DataFrame(self.Intelligibility_List)
