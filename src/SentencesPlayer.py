@@ -298,18 +298,19 @@ class SentencesPlayer:
             f"Comparison_Sentences/SIT.xlsx")
 
         # Merge both Files
-        self.Intelligibility_Sentences_df = pd.merge(self.Input_Sentences_df, self.Compare_Sentences_df)
+        self.Intelligibility_Sentences_df = pd.merge(left=self.Input_Sentences_df, right=self.Compare_Sentences_df,
+                                                     left_on="NAME", right_on="NAME")
 
-        list_sentences = list(self.Compare_Sentences_df['SENTENCES'])
-        list_input_sentences = list(self.Input_Sentences_df['INPUT_SENTENCE'])
+        list_sentences = list(self.Intelligibility_Sentences_df['SENTENCES'])
+        list_input_sentences = list(self.Intelligibility_Sentences_df['INPUT_SENTENCE'])
 
         for i in range(len(list_sentences)):
             ratio = SequenceMatcher(None, list_sentences[i].lower(), list_input_sentences[i].lower()).ratio()
             self.Intelligibility_List.append(ratio)
 
-        self.Intelligibility_Sentences_df["SENTENCES"] = pd.DataFrame(self.Compare_Sentences_df['SENTENCES'])
-        self.Intelligibility_Sentences_df["INPUT_SENTENCE"] = pd.DataFrame(self.Input_Sentences_df['INPUT_SENTENCE'])
-        self.Intelligibility_Sentences_df["NAME"] = pd.DataFrame(self.Input_Sentences_df['NAME'])
+        self.Intelligibility_Sentences_df["SENTENCES"] = pd.DataFrame(self.Intelligibility_Sentences_df['SENTENCES'])
+        self.Intelligibility_Sentences_df["INPUT_SENTENCE"] = pd.DataFrame(self.Intelligibility_Sentences_df['INPUT_SENTENCE'])
+        self.Intelligibility_Sentences_df["NAME"] = pd.DataFrame(self.Intelligibility_Sentences_df['NAME'])
 
         # Adding a Frame of Intelligibility Score
         self.Intelligibility_Sentences_df["INTELLIGIBILITY_SCORE"] = pd.DataFrame(self.Intelligibility_List)
@@ -326,4 +327,3 @@ class SentencesPlayer:
         self.Intelligibility_Sentences_df.to_excel(writer, sheet_name='Score_1')
 
         writer.save()
-        writer.close()
