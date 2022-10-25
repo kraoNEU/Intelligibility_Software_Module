@@ -1,9 +1,9 @@
 INPUT_SENTENCE,NAME,SENTENCES,INTELLIGIBILITY_SCORE
-Test1,P1_W2_S1,I think I'm getting better.,0.125
-Test2,P1_W2_S4,he is capable and willing to make decisions.,0.12244897959183673
-Test3,P1_W2_S2,You want him to do well,0.14285714285714285
-Test4,P1_W2_S3,Big muscles are not necessarily strong ones,0.125
-Test5,P1_W1_S1,We picked grapes for wine,0.13333333333333333
-Test6,P1_W1_S4,Enjoy the fair weather while in the tropics.,0.08163265306122448
-Test7,P1_W1_S2,The ballet is about to begin.,0.17647058823529413
-Test8,P1_W1_S3,You're used to being on the field.,0.15384615384615385
+Test1,P1_W1_S4,Enjoy the fair weather while in the tropics.,0.08163265306122448
+Test2,P1_W1_S1,We picked grapes for wine,0.13333333333333333
+Test3,P1_W1_S2,The ballet is about to begin.,0.17647058823529413
+Test4,P1_W1_S3,You're used to being on the field.,0.15384615384615385
+Test5,P1_W2_S4,he is capable and willing to make decisions.,0.12244897959183673
+Test6,P1_W2_S1,I think I'm getting better.,0.125
+Test7,P1_W2_S2,You want him to do well,0.14285714285714285
+Test8,P1_W2_S3,Big muscles are not necessarily strong ones,0.125
