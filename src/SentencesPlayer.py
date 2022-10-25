@@ -323,9 +323,11 @@ class SentencesPlayer:
         df_3.to_csv(
             f"Intelligibility_Score/Intelligibility_Score.csv", index=None)
 
+        df_3.to_excel('Intelligibility_Score/Intelligibility_Score_test.xlsx', engine='xlsxwriter', verbose=True, startcol=0, startrow=0)
+
         writer = pd.ExcelWriter('Intelligibility_Score/Intelligibility_Score.xlsx', engine='xlsxwriter')
 
         # Exporting to Excel Frame
-        df_3.to_excel(writer, sheet_name='Score_1')
+        df_3.to_excel(writer)
 
         writer.save()

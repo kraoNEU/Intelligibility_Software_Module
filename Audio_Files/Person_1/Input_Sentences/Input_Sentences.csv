@@ -1,9 +1,9 @@
 INPUT_SENTENCE,NAME
-Test1,P1_W2_S1
-test2,P1_W2_S2
+test1,P1_W2_S1
+test2,P1_W2_S4
 test3,P1_W2_S3
-test4,P1_W2_S4
+test4,P1_W2_S2
 test5,P1_W1_S1
-test6,P1_W1_S2
+test6,P1_W1_S4
 test7,P1_W1_S3
-test8,P1_W1_S4
+test8,P1_W1_S2
