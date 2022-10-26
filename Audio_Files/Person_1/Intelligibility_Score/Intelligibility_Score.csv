@@ -1,9 +1,0 @@
-SENTENCES,INPUT_SENTENCE,NAME,INTELLIGIBILITY_SCORE
-I think I'm getting better.,test1,P1_W2_S1,0.125
-he is capable and willing to make decisions.,test2,P1_W2_S4,0.12244897959183673
-Big muscles are not necessarily strong ones,test3,P1_W2_S3,0.125
-You want him to do well,test4,P1_W2_S2,0.14285714285714285
-We picked grapes for wine,test5,P1_W1_S1,0.13333333333333333
-Enjoy the fair weather while in the tropics.,test6,P1_W1_S4,0.08163265306122448
-You're used to being on the field.,test7,P1_W1_S3,0.15384615384615385
-The ballet is about to begin.,test8,P1_W1_S2,0.17647058823529413
