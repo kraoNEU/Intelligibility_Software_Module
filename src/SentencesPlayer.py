@@ -23,7 +23,7 @@ class SentencesPlayer:
         self.Compare_Sentences_df = pd.DataFrame()
         self.Intelligibility_Sentences_df = pd.DataFrame()
         self.Intelligibility_List = []
-
+        self.df_3 = pd.DataFrame()
         self.set_current_csv_input_sentences_file_path = ''
         self.Person_Index_append = ''
 
@@ -42,8 +42,8 @@ class SentencesPlayer:
         # Getting the File Name Dynamically from the cwd()
         self.set_current_csv_input_sentences_file_path = os.getcwd().split("/")[-1]
 
-        # Getting the value to append the vallues to the Index columns of the csv and xlsx file
-        self.Person_Index_append = self.set_current_csv_input_sentences_file_path[0] + \
+        # Getting the value to append the values to the Index columns of the csv and xlsx file
+        self.Person_Index_append = "P" + \
                                    self.set_current_csv_input_sentences_file_path[-1]
 
         # List for Serial Number and the Index
@@ -289,8 +289,6 @@ class SentencesPlayer:
         return: Returns the csv file with the serial number
         """
 
-        df_3 = pd.DataFrame()
-
         # Get Input Sentences
         self.Input_Sentences_df = pd.read_csv(
             f"Input_Sentences/Input_Sentences.csv")
@@ -303,31 +301,24 @@ class SentencesPlayer:
         self.Intelligibility_Sentences_df = pd.merge(left=self.Input_Sentences_df, right=self.Compare_Sentences_df,
                                                      left_on="NAME", right_on="NAME")
 
-        list_sentences = list(self.Intelligibility_Sentences_df['SENTENCES'])
-        list_input_sentences = list(self.Intelligibility_Sentences_df['INPUT_SENTENCE'])
+        list_sentences = self.Intelligibility_Sentences_df['SENTENCES'].tolist()
+        list_input_sentences = self.Intelligibility_Sentences_df['INPUT_SENTENCE'].tolist()
 
         for i in range(len(list_sentences)):
             ratio = SequenceMatcher(None, list_sentences[i].lower(), list_input_sentences[i].lower()).ratio()
             self.Intelligibility_List.append(ratio)
 
-        df_3["SENTENCES"] = pd.DataFrame(self.Intelligibility_Sentences_df['SENTENCES'])
-        df_3["INPUT_SENTENCE"] = pd.DataFrame(self.Intelligibility_Sentences_df['INPUT_SENTENCE'])
-        df_3["NAME"] = pd.DataFrame(self.Intelligibility_Sentences_df['NAME'])
+        self.df_3["SENTENCES"] = self.Intelligibility_Sentences_df['SENTENCES']
+        self.df_3["INPUT_SENTENCE"] = self.Intelligibility_Sentences_df['INPUT_SENTENCE']
+        self.df_3["NAME"] = self.Intelligibility_Sentences_df['NAME']
 
         # Adding a Frame of Intelligibility Score
-        df_3["INTELLIGIBILITY_SCORE"] = pd.DataFrame(self.Intelligibility_List)
+        self.df_3["INTELLIGIBILITY_SCORE"] = self.Intelligibility_List
 
         os.mkdir("Intelligibility_Score/")
 
         # Exporting a CSV frame
-        df_3.to_csv(
-            f"Intelligibility_Score/Intelligibility_Score.csv", index=None)
+        self.df_3.to_csv(
+            f"Intelligibility_Score/Intelligibility_Score.csv")
 
-        df_3.to_excel('Intelligibility_Score/Intelligibility_Score_test.xlsx', engine='xlsxwriter', verbose=True, startcol=0, startrow=0)
-
-        writer = pd.ExcelWriter('Intelligibility_Score/Intelligibility_Score.xlsx', engine='xlsxwriter')
-
-        # Exporting to Excel Frame
-        df_3.to_excel(writer)
-
-        writer.save()
+        self.df_3.to_excel('Intelligibility_Score/Intelligibility_Score_test.xlsx', engine='xlsxwriter', sheet_name="Intelligibility Score")
