@@ -308,6 +308,7 @@ class SentencesPlayer:
             ratio = SequenceMatcher(None, list_sentences[i].lower(), list_input_sentences[i].lower()).ratio()
             self.Intelligibility_List.append(ratio)
 
+        # Adding to the column
         self.df_3["SENTENCES"] = self.Intelligibility_Sentences_df['SENTENCES']
         self.df_3["INPUT_SENTENCE"] = self.Intelligibility_Sentences_df['INPUT_SENTENCE']
         self.df_3["NAME"] = self.Intelligibility_Sentences_df['NAME']
@@ -315,10 +316,13 @@ class SentencesPlayer:
         # Adding a Frame of Intelligibility Score
         self.df_3["INTELLIGIBILITY_SCORE"] = self.Intelligibility_List
 
+        # make directory
         os.mkdir("Intelligibility_Score/")
 
-        # Exporting a CSV frame
+        # Exporting a CSV Frame
         self.df_3.to_csv(
             f"Intelligibility_Score/Intelligibility_Score.csv")
 
-        self.df_3.to_excel('Intelligibility_Score/Intelligibility_Score_test.xlsx', engine='xlsxwriter', sheet_name="Intelligibility Score")
+        # Exporting a Excel Frame
+        self.df_3.to_excel('Intelligibility_Score/Intelligibility_Score.xlsx', engine='xlsxwriter',
+                           sheet_name="Intelligibility Score")
