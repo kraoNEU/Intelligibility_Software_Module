@@ -1,0 +1,8 @@
+,SENTENCES,INPUT_SENTENCE,NAME,INTELLIGIBILITY_SCORE
+0,The ballet is about to begin.,test1,P2_W1_S2,0.17647058823529413
+1,We picked grapes for wine,test1,P2_W1_S1,0.13333333333333333
+2,Enjoy the fair weather while in the tropics.,test1,P2_W1_S4,0.08163265306122448
+3,You want him to do well,test1,P2_W2_S2,0.14285714285714285
+4,Big muscles are not necessarily strong ones,test1,P2_W2_S3,0.125
+5,I think I'm getting better.,test1,P2_W2_S1,0.125
+6,he is capable and willing to make decisions.,test1,P2_W2_S4,0.12244897959183673

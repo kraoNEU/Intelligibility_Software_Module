@@ -106,7 +106,7 @@ class SentencesPlayer:
         trackframe.place(x=0, y=100, width=600, height=100)
 
         # Creating a Text Widget For the Input
-        self.Input_Text = Text(trackframe, width=83, height=5)
+        self.Input_Text = Text(trackframe, width=82, height=5)
         self.Input_Text.grid(row=50, column=50)
 
         # Inserting Instruction Window
