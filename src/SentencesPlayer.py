@@ -31,6 +31,9 @@ class SentencesPlayer:
         self.Person_Index_append = ''
         self.Corrected_Word_Count = 0
         self.Corrected_Word_Count_List = []
+        self.Total_Word_Count_List = []
+        self.original_sentence = str
+        self.input_sentence = str
 
         # Music Counter Checker
         self.sentence_count_repeat = 0
@@ -309,9 +312,48 @@ class SentencesPlayer:
         list_sentences = self.Intelligibility_Sentences_df['SENTENCES'].tolist()
         list_input_sentences = self.Intelligibility_Sentences_df['INPUT_SENTENCE'].tolist()
 
-        for i in range(len(list_sentences)):
+        # Getting the Sequence matcher for the Intelligibility Score
+        for i in range(0, len(list_sentences)):
             ratio = SequenceMatcher(None, list_sentences[i].lower(), list_input_sentences[i].lower()).ratio()
             self.Intelligibility_List.append(ratio)
+
+        # Getting the Work Count of the Sentences
+        for i in range(0, len(list_sentences)):
+            if len(list_sentences[i].split(" ")) > len(list_input_sentences[i].split(" ")):
+                self.original_sentence = list_sentences[i]
+                self.input_sentence = list_input_sentences[i]
+
+                self.original_sentence = TextBlob(self.original_sentence.lower()).correct()
+                self.input_sentence = TextBlob(self.input_sentence.lower()).correct()
+
+                d = difflib.Differ()
+                diff = d.compare(self.original_sentence.lower().split(), self.input_sentence.lower().split())
+
+                for j in list(diff):
+                    if '-' in j or '+' in j or '?' in j:
+                        break
+                    self.Corrected_Word_Count += 1
+                self.Corrected_Word_Count_List.append(self.Corrected_Word_Count)
+                self.Corrected_Word_Count = 0
+                self.Total_Word_Count_List.append(len(list_sentences[i].split(" ")))
+
+            else:
+                self.original_sentence = list_sentences[i]
+                self.input_sentence = list_input_sentences[i]
+
+                self.original_sentence = TextBlob(self.original_sentence.lower()).correct()
+                self.input_sentence = TextBlob(self.input_sentence.lower()).correct()
+
+                d = difflib.Differ()
+                diff = d.compare(self.original_sentence.lower().split(), self.input_sentence.lower().split())
+
+                for j in list(diff):
+                    if '-' in j or '+' in j or '?' in j:
+                        break
+                    self.Corrected_Word_Count += 1
+                self.Corrected_Word_Count_List.append(self.Corrected_Word_Count)
+                self.Corrected_Word_Count = 0
+                self.Total_Word_Count_List.append(len(list_input_sentences[i].split(" ")))
 
         # Adding to the column
         self.df_3["SENTENCES"] = self.Intelligibility_Sentences_df['SENTENCES']
@@ -320,6 +362,15 @@ class SentencesPlayer:
 
         # Adding a Frame of Intelligibility Score
         self.df_3["INTELLIGIBILITY_SCORE"] = self.Intelligibility_List
+
+        # Adding a Frame of Words Correct
+        self.df_3["Words_Correct"] = self.Corrected_Word_Count_List
+
+        # Adding a Frame of Total Word Count
+        self.df_3["Total_Word_Count"] = self.Total_Word_Count_List
+
+        # Calculated Intelligibility
+        self.df_3["Calculated_Intelligibility"] = (self.df_3["Words_Correct"] / self.df_3["Total_Word_Count"])
 
         # make directory
         os.mkdir("Intelligibility_Score/")

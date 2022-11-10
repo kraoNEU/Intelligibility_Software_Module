@@ -1,9 +1,9 @@
-,SENTENCES,INPUT_SENTENCE,NAME,INTELLIGIBILITY_SCORE
-0,We picked grapes for wine,t1,P1_W1_S1,0.0
-1,You're used to being on the field.,t2,P1_W1_S3,0.05555555555555555
-2,The ballet is about to begin.,t3,P1_W1_S2,0.06451612903225806
-3,Enjoy the fair weather while in the tropics.,t4,P1_W1_S4,0.043478260869565216
-4,I think I'm getting better.,t5,P1_W2_S1,0.06896551724137931
-5,Big muscles are not necessarily strong ones,t6,P1_W2_S3,0.044444444444444446
-6,You want him to do well,t7,P1_W2_S2,0.08
-7,he is capable and willing to make decisions.,t8,P1_W2_S4,0.043478260869565216
+,SENTENCES,INPUT_SENTENCE,NAME,INTELLIGIBILITY_SCORE,Words_Correct,Total_Word_Count,Calculated_Intelligibility
+0,You're used to being on the field.,test1,P1_W1_S3,0.15384615384615385,0,7,0.0
+1,We picked grapes for wine,test2,P1_W1_S1,0.13333333333333333,0,5,0.0
+2,Enjoy the fair weather while in the tropics.,test3,P1_W1_S4,0.08163265306122448,0,8,0.0
+3,The ballet is about to begin.,test4,P1_W1_S2,0.17647058823529413,0,6,0.0
+4,Big muscles are not necessarily strong ones,test5,P1_W2_S3,0.125,0,7,0.0
+5,I think I'm getting better.,test6,P1_W2_S1,0.125,0,5,0.0
+6,he is capable and willing to make decisions.,test7,P1_W2_S4,0.12244897959183673,0,8,0.0
+7,You want him to do well,test8,P1_W2_S2,0.14285714285714285,0,6,0.0
