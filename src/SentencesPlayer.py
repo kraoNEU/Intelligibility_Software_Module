@@ -6,6 +6,9 @@ import pandas as pd
 import pygame
 from tkinter import *
 import random
+import difflib
+from textblob import TextBlob
+from textblob import Word
 
 
 class SentencesPlayer:
@@ -26,6 +29,8 @@ class SentencesPlayer:
         self.df_3 = pd.DataFrame()
         self.set_current_csv_input_sentences_file_path = ''
         self.Person_Index_append = ''
+        self.Corrected_Word_Count = 0
+        self.Corrected_Word_Count_List = []
 
         # Music Counter Checker
         self.sentence_count_repeat = 0
