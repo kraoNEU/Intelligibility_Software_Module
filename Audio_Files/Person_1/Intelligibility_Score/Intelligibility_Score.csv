@@ -1,9 +1,9 @@
 ,SENTENCES,INPUT_SENTENCE,NAME,INTELLIGIBILITY_SCORE,Words_Correct,Total_Word_Count,Calculated_Intelligibility
-0,You're used to being on the field.,test1,P1_W1_S3,0.15384615384615385,0,7,0.0
-1,We picked grapes for wine,test2,P1_W1_S1,0.13333333333333333,0,5,0.0
-2,Enjoy the fair weather while in the tropics.,test3,P1_W1_S4,0.08163265306122448,0,8,0.0
-3,The ballet is about to begin.,test4,P1_W1_S2,0.17647058823529413,0,6,0.0
-4,Big muscles are not necessarily strong ones,test5,P1_W2_S3,0.125,0,7,0.0
-5,I think I'm getting better.,test6,P1_W2_S1,0.125,0,5,0.0
-6,he is capable and willing to make decisions.,test7,P1_W2_S4,0.12244897959183673,0,8,0.0
-7,You want him to do well,test8,P1_W2_S2,0.14285714285714285,0,6,0.0
+0,he is capable and willing to make decisions.,you want him to do well,P1_W2_S4,0.29850746268656714,0,8,0.0
+1,Big muscles are not necessarily strong ones,he is capable and willing to decide,P1_W2_S3,0.3333333333333333,0,7,0.0
+2,I think I'm getting better.,big muscles are not neccesarily strong,P1_W2_S1,0.24615384615384617,0,6,0.0
+3,You want him to do well,i think i'm getting better,P1_W2_S2,0.3673469387755102,0,6,0.0
+4,Enjoy the fair weather while in the tropics.,the ballet is about to begin,P1_W1_S4,0.3611111111111111,0,8,0.0
+5,You're used to being on the field.,enjoy the fair weather while in the tropics,P1_W1_S3,0.36363636363636365,0,8,0.0
+6,We picked grapes for wine,your used to being on the feel,P1_W1_S1,0.32727272727272727,0,7,0.0
+7,The ballet is about to begin.,we picked grapes for wine,P1_W1_S2,0.37037037037037035,0,6,0.0

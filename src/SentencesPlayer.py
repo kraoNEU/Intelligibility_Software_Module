@@ -8,7 +8,6 @@ from tkinter import *
 import random
 import difflib
 from textblob import TextBlob
-from textblob import Word
 
 
 class SentencesPlayer:
@@ -26,7 +25,7 @@ class SentencesPlayer:
         self.Compare_Sentences_df = pd.DataFrame()
         self.Intelligibility_Sentences_df = pd.DataFrame()
         self.Intelligibility_List = []
-        self.df_3 = pd.DataFrame()
+        self.export_df = pd.DataFrame()
         self.set_current_csv_input_sentences_file_path = ''
         self.Person_Index_append = ''
         self.Corrected_Word_Count = 0
@@ -298,12 +297,10 @@ class SentencesPlayer:
         """
 
         # Get Input Sentences
-        self.Input_Sentences_df = pd.read_csv(
-            f"Input_Sentences/Input_Sentences.csv")
+        self.Input_Sentences_df = pd.read_csv(f"Input_Sentences/Input_Sentences.csv")
 
         # Get Comparison Sentences
-        self.Compare_Sentences_df = pd.read_excel(
-            f"Comparison_Sentences/SIT.xlsx")
+        self.Compare_Sentences_df = pd.read_excel(f"Comparison_Sentences/SIT.xlsx")
 
         # Merge both Files
         self.Intelligibility_Sentences_df = pd.merge(left=self.Input_Sentences_df, right=self.Compare_Sentences_df,
@@ -319,24 +316,34 @@ class SentencesPlayer:
 
         # Getting the Work Count of the Sentences
         for i in range(0, len(list_sentences)):
+
+            # Getting the length of the highest sentences count for the word count
             if len(list_sentences[i].split(" ")) > len(list_input_sentences[i].split(" ")):
                 self.original_sentence = list_sentences[i]
                 self.input_sentence = list_input_sentences[i]
 
+                # Correcting the sentence if it is wrong
                 self.original_sentence = TextBlob(self.original_sentence.lower()).correct()
                 self.input_sentence = TextBlob(self.input_sentence.lower()).correct()
 
+                # Getting the Diff Library Object
                 d = difflib.Differ()
+
+                # Compares the Strings
                 diff = d.compare(self.original_sentence.lower().split(), self.input_sentence.lower().split())
 
+                # Checks for '+', '-' and '?' or string to get the value of the string
                 for j in list(diff):
                     if '-' in j or '+' in j or '?' in j:
                         break
                     self.Corrected_Word_Count += 1
+
+                # Appending the values of the Word count for the numerator
                 self.Corrected_Word_Count_List.append(self.Corrected_Word_Count)
                 self.Corrected_Word_Count = 0
                 self.Total_Word_Count_List.append(len(list_sentences[i].split(" ")))
 
+            # Appends the other value of the denominator which is the other value of word count
             else:
                 self.original_sentence = list_sentences[i]
                 self.input_sentence = list_input_sentences[i]
@@ -356,29 +363,30 @@ class SentencesPlayer:
                 self.Total_Word_Count_List.append(len(list_input_sentences[i].split(" ")))
 
         # Adding to the column
-        self.df_3["SENTENCES"] = self.Intelligibility_Sentences_df['SENTENCES']
-        self.df_3["INPUT_SENTENCE"] = self.Intelligibility_Sentences_df['INPUT_SENTENCE']
-        self.df_3["NAME"] = self.Intelligibility_Sentences_df['NAME']
+        self.export_df["SENTENCES"] = self.Intelligibility_Sentences_df['SENTENCES']
+        self.export_df["INPUT_SENTENCE"] = self.Intelligibility_Sentences_df['INPUT_SENTENCE']
+        self.export_df["NAME"] = self.Intelligibility_Sentences_df['NAME']
 
         # Adding a Frame of Intelligibility Score
-        self.df_3["INTELLIGIBILITY_SCORE"] = self.Intelligibility_List
+        self.export_df["INTELLIGIBILITY_SCORE"] = self.Intelligibility_List
 
         # Adding a Frame of Words Correct
-        self.df_3["Words_Correct"] = self.Corrected_Word_Count_List
+        self.export_df["Words_Correct"] = self.Corrected_Word_Count_List
 
         # Adding a Frame of Total Word Count
-        self.df_3["Total_Word_Count"] = self.Total_Word_Count_List
+        self.export_df["Total_Word_Count"] = self.Total_Word_Count_List
 
         # Calculated Intelligibility
-        self.df_3["Calculated_Intelligibility"] = (self.df_3["Words_Correct"] / self.df_3["Total_Word_Count"])
+        self.export_df["Calculated_Intelligibility"] = (
+                self.export_df["Words_Correct"] / self.export_df["Total_Word_Count"])
 
         # make directory
         os.mkdir("Intelligibility_Score/")
 
         # Exporting a CSV Frame
-        self.df_3.to_csv(
+        self.export_df.to_csv(
             f"Intelligibility_Score/Intelligibility_Score.csv")
 
         # Exporting a Excel Frame
-        self.df_3.to_excel('Intelligibility_Score/Intelligibility_Score.xlsx', engine='xlsxwriter',
-                           sheet_name="Intelligibility Score")
+        self.export_df.to_excel('Intelligibility_Score/Intelligibility_Score.xlsx', engine='xlsxwriter',
+                                sheet_name="Intelligibility Score")
