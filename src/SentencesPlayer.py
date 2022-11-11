@@ -19,10 +19,8 @@ class SentencesPlayer:
         Created all the Background Widgets and the Labels for the GUI Module
         """
 
-        self.input_sentence_2 = None
-        self.input_sentence_1 = None
-        self.original_sentence_2 = None
-        self.original_sentence_1 = None
+        self.input_sentence = None
+        self.original_sentence = None
         self.Input_Sentence = None
         self.root = root
         self.count = 0
@@ -113,7 +111,7 @@ class SentencesPlayer:
         trackframe = LabelFrame(self.root, text="Sentences Input", font=("times new roman", 15),
                                 bg="black",
                                 fg="white", bd=5, relief=GROOVE)
-        trackframe.place(x=0, y=100, width=600, height=100)
+        trackframe.place(x=0, y=100, width=620, height=100)
 
         # Creating a Text Widget For the Input
         self.Input_Text = Text(trackframe, width=82, height=5)
@@ -326,15 +324,13 @@ class SentencesPlayer:
                 self.original_sentence = list_sentences[sentence_index]
                 self.input_sentence = list_input_sentences[sentence_index]
 
-                self.original_sentence_1 = TextBlob(self.original_sentence.lower())
-                self.original_sentence_2 = self.original_sentence_1.correct()
+                # Some issue with the Pyinstaller TextBlob
 
-                self.input_sentence_1 = TextBlob(self.input_sentence.lower())
-                self.input_sentence_2 = self.input_sentence_1.correct()
+                # self.original_sentence_1 = TextBlob(self.original_sentence.lower())
+                # self.original_sentence_2 = self.original_sentence_1.correct()
 
-                print(self.original_sentence_2)
-                print("------------------------------------------")
-                print(self.input_sentence_2)
+                # self.input_sentence_1 = TextBlob(self.input_sentence.lower())
+                # self.input_sentence_2 = self.input_sentence_1.correct()
 
                 # Getting the Diff Library Object
                 d = difflib.Differ()
@@ -359,8 +355,10 @@ class SentencesPlayer:
                 self.original_sentence = list_sentences[sentence_index]
                 self.input_sentence = list_input_sentences[sentence_index]
 
-                self.original_sentence = TextBlob(self.original_sentence.lower()).correct()
-                self.input_sentence = TextBlob(self.input_sentence.lower()).correct()
+                # Issue with the Pyinstaller and TextBlob
+
+                # self.original_sentence = TextBlob(self.original_sentence.lower()).correct()
+                # self.input_sentence = TextBlob(self.input_sentence.lower()).correct()
 
                 d = difflib.Differ()
                 diff = d.compare(self.original_sentence.lower().split(), self.input_sentence.lower().split())
@@ -373,10 +371,6 @@ class SentencesPlayer:
 
                 self.Corrected_Word_Count = 0
                 self.Total_Word_Count_List.append(len(list_input_sentences[sentence_index].split(" ")))
-
-        print(self.Total_Word_Count_List)
-        print("-------------------------------")
-        print(self.Corrected_Word_Count_List)
 
         # Adding to the column
         self.export_df["SENTENCES"] = self.Intelligibility_Sentences_df['SENTENCES']
