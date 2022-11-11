@@ -326,6 +326,10 @@ class SentencesPlayer:
                 self.original_sentence = TextBlob(self.original_sentence.lower()).correct()
                 self.input_sentence = TextBlob(self.input_sentence.lower()).correct()
 
+                print(self.original_sentence)
+                print("------------------------------------------")
+                print(self.input_sentence)
+
                 # Getting the Diff Library Object
                 d = difflib.Differ()
 
