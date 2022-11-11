@@ -111,7 +111,7 @@ class SentencesPlayer:
         trackframe = LabelFrame(self.root, text="Sentences Input", font=("times new roman", 15),
                                 bg="black",
                                 fg="white", bd=5, relief=GROOVE)
-        trackframe.place(x=0, y=100, width=620, height=100)
+        trackframe.place(x=0, y=100, width=600, height=100)
 
         # Creating a Text Widget For the Input
         self.Input_Text = Text(trackframe, width=82, height=5)

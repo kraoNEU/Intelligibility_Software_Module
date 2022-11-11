@@ -14,7 +14,7 @@ os.chdir(directory)
 root.title("Intelligibility Software Module for SMILe Lab")
 
 # Setting the Window
-root.geometry("600x300+200+200")
+root.geometry("620x300+200+200")
 
 # Set the Directory Window
 InstructionWindow(root)
