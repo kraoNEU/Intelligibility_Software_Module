@@ -1,0 +1,9 @@
+,SENTENCES,INPUT_SENTENCE,NAME,INTELLIGIBILITY_SCORE,Words_Correct,Total_Word_Count,Calculated_Intelligibility
+0,We picked grapes for wine,test1,P1_W1_S1,0.13333333333333333,0,5,0.0
+1,Enjoy the fair weather while in the tropics.,test2,P1_W1_S4,0.08163265306122448,0,8,0.0
+2,The ballet is about to begin.,t3,P1_W1_S2,0.06451612903225806,0,6,0.0
+3,You're used to being on the field.,t4,P1_W1_S3,0.05555555555555555,0,7,0.0
+4,I think I'm getting better.,t5,P1_W2_S1,0.06896551724137931,0,5,0.0
+5,he is capable and willing to make decisions.,t6,P1_W2_S4,0.043478260869565216,0,8,0.0
+6,You want him to do well,t7,P1_W2_S2,0.08,0,6,0.0
+7,Big muscles are not necessarily strong ones,t8,P1_W2_S3,0.044444444444444446,0,7,0.0

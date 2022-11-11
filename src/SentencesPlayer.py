@@ -19,6 +19,11 @@ class SentencesPlayer:
         Created all the Background Widgets and the Labels for the GUI Module
         """
 
+        self.input_sentence_2 = None
+        self.input_sentence_1 = None
+        self.original_sentence_2 = None
+        self.original_sentence_1 = None
+        self.Input_Sentence = None
         self.root = root
         self.count = 0
         self.Input_Sentences_df = pd.DataFrame()
@@ -31,8 +36,6 @@ class SentencesPlayer:
         self.Corrected_Word_Count = 0
         self.Corrected_Word_Count_List = []
         self.Total_Word_Count_List = []
-        self.original_sentence = str
-        self.input_sentence = str
 
         # Music Counter Checker
         self.sentence_count_repeat = 0
@@ -319,16 +322,19 @@ class SentencesPlayer:
 
             # Getting the length of the highest sentences count for the word count
             if len(list_sentences[sentence_index].split(" ")) > len(list_input_sentences[sentence_index].split(" ")):
+
                 self.original_sentence = list_sentences[sentence_index]
                 self.input_sentence = list_input_sentences[sentence_index]
 
-                # Correcting the sentence if it is wrong
-                self.original_sentence = TextBlob(self.original_sentence.lower()).correct()
-                self.input_sentence = TextBlob(self.input_sentence.lower()).correct()
+                self.original_sentence_1 = TextBlob(self.original_sentence.lower())
+                self.original_sentence_2 = self.original_sentence_1.correct()
 
-                print(self.original_sentence)
+                self.input_sentence_1 = TextBlob(self.input_sentence.lower())
+                self.input_sentence_2 = self.input_sentence_1.correct()
+
+                print(self.original_sentence_2)
                 print("------------------------------------------")
-                print(self.input_sentence)
+                print(self.input_sentence_2)
 
                 # Getting the Diff Library Object
                 d = difflib.Differ()
