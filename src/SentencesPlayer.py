@@ -315,12 +315,12 @@ class SentencesPlayer:
             self.Intelligibility_List.append(ratio)
 
         # Getting the Work Count of the Sentences
-        for i in range(0, len(list_sentences)):
+        for sentence_index in range(0, len(list_sentences)):
 
             # Getting the length of the highest sentences count for the word count
-            if len(list_sentences[i].split(" ")) > len(list_input_sentences[i].split(" ")):
-                self.original_sentence = list_sentences[i]
-                self.input_sentence = list_input_sentences[i]
+            if len(list_sentences[sentence_index].split(" ")) > len(list_input_sentences[sentence_index].split(" ")):
+                self.original_sentence = list_sentences[sentence_index]
+                self.input_sentence = list_input_sentences[sentence_index]
 
                 # Correcting the sentence if it is wrong
                 self.original_sentence = TextBlob(self.original_sentence.lower()).correct()
@@ -340,13 +340,14 @@ class SentencesPlayer:
 
                 # Appending the values of the Word count for the numerator
                 self.Corrected_Word_Count_List.append(self.Corrected_Word_Count)
+
                 self.Corrected_Word_Count = 0
-                self.Total_Word_Count_List.append(len(list_sentences[i].split(" ")))
+                self.Total_Word_Count_List.append(len(list_sentences[sentence_index].split(" ")))
 
             # Appends the other value of the denominator which is the other value of word count
             else:
-                self.original_sentence = list_sentences[i]
-                self.input_sentence = list_input_sentences[i]
+                self.original_sentence = list_sentences[sentence_index]
+                self.input_sentence = list_input_sentences[sentence_index]
 
                 self.original_sentence = TextBlob(self.original_sentence.lower()).correct()
                 self.input_sentence = TextBlob(self.input_sentence.lower()).correct()
@@ -359,8 +360,13 @@ class SentencesPlayer:
                         break
                     self.Corrected_Word_Count += 1
                 self.Corrected_Word_Count_List.append(self.Corrected_Word_Count)
+
                 self.Corrected_Word_Count = 0
-                self.Total_Word_Count_List.append(len(list_input_sentences[i].split(" ")))
+                self.Total_Word_Count_List.append(len(list_input_sentences[sentence_index].split(" ")))
+
+        print(self.Total_Word_Count_List)
+        print("-------------------------------")
+        print(self.Corrected_Word_Count_List)
 
         # Adding to the column
         self.export_df["SENTENCES"] = self.Intelligibility_Sentences_df['SENTENCES']
