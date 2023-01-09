@@ -7,7 +7,6 @@ import pygame
 from tkinter import *
 import random
 import difflib
-from textblob import TextBlob
 
 
 class SentencesPlayer:
@@ -324,25 +323,14 @@ class SentencesPlayer:
                 self.original_sentence = list_sentences[sentence_index]
                 self.input_sentence = list_input_sentences[sentence_index]
 
-                # Some issue with the Pyinstaller TextBlob
-
-                # self.original_sentence_1 = TextBlob(self.original_sentence.lower())
-                # self.original_sentence_2 = self.original_sentence_1.correct()
-
-                # self.input_sentence_1 = TextBlob(self.input_sentence.lower())
-                # self.input_sentence_2 = self.input_sentence_1.correct()
-
                 # Getting the Diff Library Object
-                d = difflib.Differ()
+                matcher = difflib.SequenceMatcher(None, self.original_sentence.lower().split(),
+                                                  self.input_sentence.lower().split())
 
                 # Compares the Strings
-                diff = d.compare(self.original_sentence.lower().split(), self.input_sentence.lower().split())
-
-                # Checks for '+', '-' and '?' or string to get the value of the string
-                for j in list(diff):
-                    if '-' in j or '+' in j or '?' in j:
-                        break
-                    self.Corrected_Word_Count += 1
+                for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+                    if tag == "equal":
+                        self.Corrected_Word_Count += j2 - j1
 
                 # Appending the values of the Word count for the numerator
                 self.Corrected_Word_Count_List.append(self.Corrected_Word_Count)
@@ -355,18 +343,13 @@ class SentencesPlayer:
                 self.original_sentence = list_sentences[sentence_index]
                 self.input_sentence = list_input_sentences[sentence_index]
 
-                # Issue with the Pyinstaller and TextBlob
+                matcher = difflib.SequenceMatcher(None, self.original_sentence.lower().split(),
+                                                  self.input_sentence.lower().split())
 
-                # self.original_sentence = TextBlob(self.original_sentence.lower()).correct()
-                # self.input_sentence = TextBlob(self.input_sentence.lower()).correct()
+                for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+                    if tag == "equal":
+                        self.Corrected_Word_Count += j2 - j1
 
-                d = difflib.Differ()
-                diff = d.compare(self.original_sentence.lower().split(), self.input_sentence.lower().split())
-
-                for j in list(diff):
-                    if '-' in j or '+' in j or '?' in j:
-                        break
-                    self.Corrected_Word_Count += 1
                 self.Corrected_Word_Count_List.append(self.Corrected_Word_Count)
 
                 self.Corrected_Word_Count = 0

@@ -1,9 +1,9 @@
 ,SENTENCES,INPUT_SENTENCE,NAME,INTELLIGIBILITY_SCORE,Words_Correct,Total_Word_Count,Calculated_Intelligibility
-0,The ballet is about to begin.,q1,P1_W1_S2,0.0,0,6,0.0
-1,You're used to being on the field.,w2,P1_W1_S3,0.0,0,7,0.0
-2,We picked grapes for wine,e3,P1_W1_S1,0.07407407407407407,0,5,0.0
-3,Enjoy the fair weather while in the tropics.,r4,P1_W1_S4,0.043478260869565216,0,8,0.0
-4,You want him to do well,t5,P1_W2_S2,0.08,0,6,0.0
-5,Big muscles are not necessarily strong ones,y6,P1_W2_S3,0.044444444444444446,0,7,0.0
-6,I think I'm getting better.,u7,P1_W2_S1,0.0,0,5,0.0
-7,he is capable and willing to make decisions.,i8,P1_W2_S4,0.043478260869565216,0,8,0.0
+0,Enjoy the fair weather while in the tropics.,jewpofjoiwjFOJWROIFJWERFJOP[WKJEFPJKWF,P1_W1_S4,0.24390243902439024,0,8,0.0
+1,You're used to being on the field.,PRKF[PJrwpvjwprjvp,P1_W1_S3,0.07692307692307693,0,7,0.0
+2,We picked grapes for wine,khiuh wfhouhf ojhfojq oejfojq oijfojw oijwefojw jwoejfoi oijowj feohweoh,P1_W1_S1,0.20618556701030927,0,9,0.0
+3,The ballet is about to begin.,uhfowhoufh fweoij wefjowj ewfjojo efoijwo oijewoj efwjwo,P1_W1_S2,0.18823529411764706,0,7,0.0
+4,he is capable and willing to make decisions.,owijefohj ohfweoh ewohfo efhweo fhjowhj fowejofj fjowej fewojo,P1_W2_S4,0.16981132075471697,0,8,0.0
+5,Big muscles are not necessarily strong ones,whfi wefoh owjowj ojwfo fwjoj oefjoqj wfoijwo oewjoewj fjwojo wfjwojf ofewijfo,P1_W2_S3,0.11570247933884298,0,11,0.0
+6,I think I'm getting better.,fnk hfow wrfh weojfo fwojo wroijfho ojwro fojoiwr ojwof jwfoi wjojo,P1_W2_S1,0.14893617021276595,0,11,0.0
+7,You want him to do well,ncaj ednfow woejfo jfowe weijfo pfjwoi foijwoi ewpijpo wpjfp ieoaij eijfp,P1_W2_S2,0.1875,0,11,0.0
